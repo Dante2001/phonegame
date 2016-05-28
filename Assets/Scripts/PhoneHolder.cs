@@ -10,6 +10,7 @@ public class PhoneHolder : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col) {
 		if (col.gameObject.tag.Equals ("Monster")) {
+			GameManager.hasPhone = false;
 			float force = 300;
 			float xForce;
 			float zForce;
