@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/danteScene.unity
+- path: Assets/Scenes/mattScene.unity
   isLoaded: 1
   isActive: 1
