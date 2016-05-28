@@ -9,11 +9,13 @@ public class Phone : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col) {
-		if (col.gameObject.tag.Equals ("")) {
-			GameManager.hasPhone = true;
-		}
-		Destroy (this.gameObject);
+		//GRAB THE PHONE
 
+		if (col.gameObject.tag.Equals ("Player")) {
+			GameManager.hasPhone = true;
+		
+			Destroy (this.gameObject);
+		}
 	}
 	
 	// Update is called once per frame
