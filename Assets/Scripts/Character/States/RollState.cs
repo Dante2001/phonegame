@@ -30,4 +30,6 @@ public class RollState : CharacterState {
             rollTime = details.rollTime;
         }
     }
+
+    public override void FlyBack(GameObject attacker) { }
 }

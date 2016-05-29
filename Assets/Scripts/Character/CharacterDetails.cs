@@ -17,6 +17,7 @@ public class CharacterDetails {
     public float shootMoveSpeed = 3f;
     public float bulletSpeed = 5f;
     public string enemyTag = "Monster";
+    public float flyTime = 0.5f;
     public int previousX;
     public int previousZ;
     // not used?
@@ -98,6 +99,38 @@ public class CharacterDetails {
     public string GetEnemyTag()
     {
         return enemyTag;
+    }
+
+    public void StartFlyBack(GameObject attacker)
+    {
+        GameManager.hasPhone = false;
+        float force = 1200;
+        float xForce;
+        float zForce;
+        if (attacker.transform.position.x > rigidbody.position.x)
+        {
+            xForce = -force;
+        }
+        else
+        {
+            xForce = force;
+        }
+        if (attacker.transform.position.z > rigidbody.position.z)
+        {
+            zForce = -force;
+        }
+        else
+        {
+            zForce = force;
+        }
+
+        rigidbody.AddForce(xForce, force / 2, zForce);
+    }
+
+    public void EndFlyBack()
+    {
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
     }
 
     public void UpdateDetails()

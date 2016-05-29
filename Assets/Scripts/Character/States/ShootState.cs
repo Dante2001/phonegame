@@ -10,7 +10,8 @@ public class ShootState : CharacterState {
 
     public override CharacterState UpdateState()
     {
-        shootingTimeLeft -= Time.deltaTime;
+        if (!isShooting)
+            shootingTimeLeft -= Time.deltaTime;
         if (shootingTimeLeft <= 0f)
         {
             return new DefaultState(details);
