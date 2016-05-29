@@ -22,7 +22,7 @@ public class CharacterState {
     public virtual void Heal() { }
     public virtual void Move(int x, int z) { }
     public virtual void Shoot() { }
-    public virtual void Spell() { }
+    public virtual void Stungun() { }
     public virtual void FlyBack(GameObject attacker) 
     {
         currentState = new FlyBackState(details);

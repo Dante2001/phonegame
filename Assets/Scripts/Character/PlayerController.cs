@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerDetails = new CharacterDetails(this.GetComponent<Rigidbody>(), this.GetComponentInChildren<AttackHitboxLogic>(),
-            this.GetComponentInChildren<RangedAttackLogic>());
+            this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>());
         currentState = new DefaultState(playerDetails);
 	}
 	
@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Fire2"))
         {
             currentState.Shoot();
+        }
+        if (Input.GetButtonDown("Fire3"))
+        {
+            currentState.Stungun();
         }
         if (Input.GetButton("Sprint"))
         {

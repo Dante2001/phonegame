@@ -7,6 +7,7 @@ public class CharacterDetails {
     private Rigidbody rigidbody;
     private AttackHitboxLogic attackHitbox;
     private RangedAttackLogic rangedAttackLogic;
+    private StungunLogic stungunLogic;
     public float defaultSpeed = 4f;
     public float rollTime = 0.4f;
     public float rollSpeed = 15f;
@@ -16,6 +17,7 @@ public class CharacterDetails {
     public float shootTime = 0.2f;
     public float shootMoveSpeed = 3f;
     public float bulletSpeed = 5f;
+    public float stungunMoveSpeed = 4f;
     public string enemyTag = "Monster";
     public float flyTime = 1f;
     public int previousX;
@@ -23,12 +25,13 @@ public class CharacterDetails {
     // not used?
     public int facing; // 0 up 1 right 2 down 3 left
 
-    public CharacterDetails(Rigidbody rb, AttackHitboxLogic ahl, RangedAttackLogic ral)
+    public CharacterDetails(Rigidbody rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl)
     {
         velocity = new Vector3(0, 0, 0);
         rigidbody = rb;
         attackHitbox = ahl;
         rangedAttackLogic = ral;
+        stungunLogic = sl;
     }
 
     // might want to change this to be SetWalkVelocity
@@ -70,6 +73,12 @@ public class CharacterDetails {
         velocity.z = z * attackMoveSpeed;
     }
 
+    public void SetStungunVelocity(int x, int z)
+    {
+        velocity.x = x * stungunMoveSpeed;
+        velocity.z = z * stungunMoveSpeed;
+    }
+
     public void SetShootVelocity(int x, int z)
     {
         velocity.x = x * shootMoveSpeed;
@@ -86,9 +95,19 @@ public class CharacterDetails {
         attackHitbox.Deactivate();
     }
 
-    public void FireBullet(GameObject target)
+    public void  ActivateStungunHitbox()
     {
-        rangedAttackLogic.FireBullet(target, bulletSpeed);
+        stungunLogic.Activate(previousX, previousZ);
+    }
+
+    public void DeactivateStungunHitbox()
+    {
+        stungunLogic.Deactivate();
+    }
+
+    public void FireBullet()
+    {
+        rangedAttackLogic.FireBullet(bulletSpeed);
     }
 
     public GameObject GetSelf()

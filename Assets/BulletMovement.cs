@@ -3,9 +3,9 @@ using System.Collections;
 
 public class BulletMovement : MonoBehaviour {
 	
-    public void FireAtObjectAtSpeed(Transform t, float speed)
+    public void FireAtObjectAtSpeed(Vector3 direction, float speed)
     {
-        Vector3 vel = (t.position - this.transform.position).normalized;
+        Vector3 vel = direction;
         vel *= speed;
         vel.y = 0f;
         this.GetComponent<Rigidbody>().velocity = vel;
