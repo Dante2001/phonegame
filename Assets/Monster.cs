@@ -3,16 +3,25 @@ using System.Collections;
 
 public class Monster : MonoBehaviour {
 
+	bool nearPlayer = false;
+
 	public void attackFinished() {
 		GetComponent<Animator> ().SetBool ("Attacking", false);
-		GameObject.Find ("player").GetComponent<PlayerController>().hitByMonster(this.gameObject);
+		if (nearPlayer) {
+			GameObject.Find ("player").GetComponent<PlayerController> ().hitByMonster (this.gameObject);
+		}
 	}
 
+	void OnTriggerExit(Collider col) {
+		nearPlayer = false;
+	}
 	void OnTriggerEnter(Collider col) {
+		nearPlayer = true;
 		if (col.gameObject.tag.Equals ("Player")) {
 			GetComponent<Animator> ().SetBool ("Attacking", true);
 		}
 	}
+
 
 
 	// Use this for initialization
