@@ -5,10 +5,14 @@ public class PlayerController : MonoBehaviour {
 
     private CharacterState currentState;
     private CharacterDetails playerDetails;
-
+	public GameObject goPhone;
 
 	public void hitByMonster(GameObject goEnemy) {
-		GameManager.hasPhone = false;
+		if (GameManager.hasPhone) {
+			GameManager.hasPhone = false;
+			Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
+		}
+
 		float force = 1200;
 		float xForce;
 		float zForce;

@@ -13,9 +13,11 @@ public class Monster : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider col) {
+		Debug.Log ("EXIT");
 		nearPlayer = false;
 	}
 	void OnTriggerEnter(Collider col) {
+		Debug.Log ("ENTER");
 		nearPlayer = true;
 		if (col.gameObject.tag.Equals ("Player")) {
 			GetComponent<Animator> ().SetBool ("Attacking", true);
@@ -23,6 +25,12 @@ public class Monster : MonoBehaviour {
 	}
 
 
+	void OnTriggerStay(Collider col) {
+		if (col.gameObject.tag.Equals ("Player")) {
+			GetComponent<Animator> ().SetBool ("Attacking", true);
+		}
+
+	}
 
 	// Use this for initialization
 	void Start () {
