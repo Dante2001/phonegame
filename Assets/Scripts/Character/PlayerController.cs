@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        playerDetails = new CharacterDetails(this.GetComponent<Rigidbody>(), this.GetComponentInChildren<AttackHitboxLogic>());
+        playerDetails = new CharacterDetails(this.GetComponent<Rigidbody>(), this.GetComponentInChildren<AttackHitboxLogic>(),
+            this.GetComponentInChildren<RangedAttackLogic>());
         currentState = new DefaultState(playerDetails);
 	}
 	
@@ -33,6 +34,15 @@ public class PlayerController : MonoBehaviour {
         {
             currentState.Attack();
         }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            currentState.Shoot();
+        }
+        if (Input.GetButton("Sprint"))
+        {
+            currentState.Sprint();
+        }
+
         currentState = currentState.UpdateState();
         playerDetails.UpdateDetails();
 	}

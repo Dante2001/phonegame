@@ -28,6 +28,13 @@ public class DefaultState : CharacterState {
         currentState.Roll(x, z);
     }
 
+    public override void Sprint()
+    {
+        base.Sprint();
+        currentState = new SprintState(details);
+        currentState.Sprint();
+    }
+
     public override void Attack()
     {
         base.Attack();
@@ -35,4 +42,10 @@ public class DefaultState : CharacterState {
         currentState.Attack();
     }
 
+    public override void Shoot()
+    {
+        base.Shoot();
+        currentState = new ShootState(details);
+        currentState.Shoot();
+    }
 }

@@ -30,12 +30,12 @@ public class CameraFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F))
-            ChangeZoom(12, 1, 1);
-        if (Input.GetKeyDown(KeyCode.G))
-            DefaultZoom(1);
-        if (Input.GetKeyDown(KeyCode.T))
-            Jitter(0.5f, 0.12f);
+        //if (Input.GetKeyDown(KeyCode.F))
+        //    ChangeZoom(12, 1, 1);
+        //if (Input.GetKeyDown(KeyCode.G))
+        //    DefaultZoom(1);
+        //if (Input.GetKeyDown(KeyCode.T))
+        //    Jitter(0.5f, 0.12f);
 
         GetPositions();
         if (isFollowing)
