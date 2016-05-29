@@ -17,7 +17,7 @@ public class CharacterDetails {
     public float shootMoveSpeed = 3f;
     public float bulletSpeed = 5f;
     public string enemyTag = "Monster";
-    public float flyTime = 0.5f;
+    public float flyTime = 1f;
     public int previousX;
     public int previousZ;
     // not used?
@@ -107,7 +107,7 @@ public class CharacterDetails {
         float force = 1200;
         float xForce;
         float zForce;
-        if (attacker.transform.position.x > rigidbody.position.x)
+        if (attacker.transform.position.x > rigidbody.position.x)   
         {
             xForce = -force;
         }
@@ -125,6 +125,7 @@ public class CharacterDetails {
         }
 
         rigidbody.AddForce(xForce, force / 2, zForce);
+        //Debug.Log("applied force");
     }
 
     public void EndFlyBack()

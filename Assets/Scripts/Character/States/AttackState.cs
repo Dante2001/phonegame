@@ -40,4 +40,10 @@ public class AttackState : CharacterState {
         details.SetAttackVelocity(x, z);
     }
 
+    public override void FlyBack(GameObject attacker)
+    {
+        details.DeactivateHitbox();
+        base.FlyBack(attacker);
+    }
+
 }
