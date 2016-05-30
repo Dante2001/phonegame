@@ -23,7 +23,11 @@ public class CharacterState {
     public virtual void Move(int x, int z) { }
     public virtual void Shoot() { }
     public virtual void Spell() { }
-    public virtual void FlyBack() { }
+    public virtual void FlyBack(GameObject attacker) 
+    {
+        currentState = new FlyBackState(details);
+        currentState.FlyBack(attacker);
+    }
     public virtual void Recover() { }
     public virtual void Stagger() { }
 

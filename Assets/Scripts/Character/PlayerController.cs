@@ -72,4 +72,10 @@ public class PlayerController : MonoBehaviour {
         currentState = currentState.UpdateState();
         playerDetails.UpdateDetails();
 	}
+
+    public void HitByMonster(GameObject attacker)
+    {
+        currentState.FlyBack(attacker);
+        //Debug.Log("hitbymonster");
+    }
 }
