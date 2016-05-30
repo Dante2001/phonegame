@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
     private CharacterState currentState;
     private CharacterDetails playerDetails;
+	public GameObject goPhone;
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +54,10 @@ public class PlayerController : MonoBehaviour {
 
     public void HitByMonster(GameObject attacker)
     {
+		if (GameManager.hasPhone) {
+			GameManager.hasPhone = false;
+			Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
+		}
         currentState.FlyBack(attacker);
         //Debug.Log("hitbymonster");
     }
