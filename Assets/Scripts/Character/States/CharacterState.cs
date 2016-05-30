@@ -28,7 +28,12 @@ public class CharacterState {
         currentState = new FlyBackState(details);
         currentState.FlyBack(attacker);
     }
-    public virtual void Recover() { }
-    public virtual void Stagger() { }
-
+    //public virtual void Recover() { }
+    //public virtual void Stagger() { }
+    public virtual CharacterState CheckAlive()
+    {
+        if (!details.IsAlive())
+            return new DeathState(details);
+        return currentState;
+    }
 }

@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerDetails = new CharacterDetails(this.GetComponent<Rigidbody>(), this.GetComponentInChildren<AttackHitboxLogic>(),
-            this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>());
+            this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>(), 
+            this.GetComponentInChildren<Hitpoints>(), this.GetComponentInChildren<BatteryCharge>());
         currentState = new DefaultState(playerDetails);
 	}
 	
@@ -43,11 +44,8 @@ public class PlayerController : MonoBehaviour {
         {
             currentState.Stungun();
         }
-        if (Input.GetButton("Sprint"))
-        {
-            currentState.Sprint();
-        }
 
+        currentState = currentState.CheckAlive();
         currentState = currentState.UpdateState();
         playerDetails.UpdateDetails();
 	}
@@ -58,6 +56,10 @@ public class PlayerController : MonoBehaviour {
 			GameManager.hasPhone = false;
 			Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
 		}
+        else
+        {
+            playerDetails.LoseHP();
+        }
         currentState.FlyBack(attacker);
         //Debug.Log("hitbymonster");
     }

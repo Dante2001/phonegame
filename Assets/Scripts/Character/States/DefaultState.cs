@@ -52,8 +52,11 @@ public class DefaultState : CharacterState {
     public override void Stungun()
     {
         base.Stungun();
-        currentState = new StungunState(details);
-        currentState.Stungun();
+        if (details.CheckBattery(details.stungunCost))
+        {
+            currentState = new StungunState(details);
+            currentState.Stungun();
+        }
     }
 
 }

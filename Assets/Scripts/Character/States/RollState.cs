@@ -15,7 +15,7 @@ public class RollState : CharacterState {
         {
             rollTime -= Time.deltaTime;
             details.SetRollVelocity((int)rollDirection.x, (int)rollDirection.y);
-            return this;
+            return currentState;
         }
         else
             return new DefaultState(details);

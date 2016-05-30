@@ -10,7 +10,7 @@ public class ShootState : CharacterState {
 
     public override CharacterState UpdateState()
     {
-        if (!isShooting)
+        if (isShooting)
             shootingTimeLeft -= Time.deltaTime;
         if (shootingTimeLeft <= 0f)
         {
@@ -22,10 +22,22 @@ public class ShootState : CharacterState {
     public override void Shoot()
     {
         base.Shoot();
-        details.FireBullet();
+        
         if (!isShooting)
+        {
+            details.FireBullet();
             isShooting = true;
-        shootingTimeLeft += details.shootTime;
+            details.UseBattery(details.fireballCost);
+            shootingTimeLeft += details.shootTime;
+        }
+        else if (details.CheckBattery(details.fireballCost))
+        {
+            details.FireBullet();
+            isShooting = true;
+            details.UseBattery(details.fireballCost);
+            shootingTimeLeft += details.shootTime;
+        }
+        
     }
 
     public override void Move(int x, int z)

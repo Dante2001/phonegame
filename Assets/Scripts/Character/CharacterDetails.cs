@@ -8,30 +8,59 @@ public class CharacterDetails {
     private AttackHitboxLogic attackHitbox;
     private RangedAttackLogic rangedAttackLogic;
     private StungunLogic stungunLogic;
+    private Hitpoints hitpoints;
+    private BatteryCharge battery;
+
     public float defaultSpeed = 4f;
+
     public float rollTime = 0.4f;
     public float rollSpeed = 15f;
+
     public float attackTime = .5f;
     public float attackMoveSpeed = 2f;
+
     public float sprintSpeed = 8f;
+
     public float shootTime = 0.2f;
     public float shootMoveSpeed = 3f;
-    public float bulletSpeed = 5f;
+    public float fireballSpeed = 5f;
+
     public float stungunMoveSpeed = 4f;
+
     public string enemyTag = "Monster";
-    public float flyTime = 1f;
+
+    public float flyTime = 0.2f;
+
     public int previousX;
     public int previousZ;
+
+    public Transform lastRespawn;
+    public float deathTime = 1f;
+
+    public int maxHP = 4;
+    public float batteryRecharge = 10f;
+    public float batterySlowRecharge = 7f;
+    public float batteryBP = 40f;
+
+    public float healCost = 100f;
+    public float fireballCost = 30f;
+    public float stungunCost = 33f;
+
     // not used?
     public int facing; // 0 up 1 right 2 down 3 left
 
-    public CharacterDetails(Rigidbody rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl)
+    public CharacterDetails(Rigidbody rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl,
+        Hitpoints hp, BatteryCharge bat)
     {
         velocity = new Vector3(0, 0, 0);
         rigidbody = rb;
         attackHitbox = ahl;
         rangedAttackLogic = ral;
         stungunLogic = sl;
+        hitpoints = hp;
+        battery = bat;
+        hitpoints.InitializeHP(maxHP);
+        battery.InitializeBattery(batteryRecharge, batterySlowRecharge, batteryBP);
     }
 
     // might want to change this to be SetWalkVelocity
@@ -107,7 +136,7 @@ public class CharacterDetails {
 
     public void FireBullet()
     {
-        rangedAttackLogic.FireBullet(bulletSpeed);
+        rangedAttackLogic.FireBullet(fireballSpeed);
     }
 
     public GameObject GetSelf()
@@ -151,6 +180,38 @@ public class CharacterDetails {
     {
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
+    }
+
+    public bool IsAlive()
+    {
+        if (hitpoints.CheckHP() <= 0)
+            return false;
+        return true;
+    }
+
+    public void Respawn()
+    {
+        // stuff here
+    }
+
+    public void LoseHP()
+    {
+        hitpoints.LoseHP();
+    }
+
+    public bool CheckBattery(float cost)
+    {
+        return battery.CheckAmount(cost);
+    }
+
+    public void UseBattery(float amount)
+    {
+        battery.DrainBattery(amount);
+    }
+
+    public void RegainHP()
+    {
+        hitpoints.GainHP();
     }
 
     public void UpdateDetails()

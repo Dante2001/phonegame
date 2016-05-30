@@ -32,6 +32,7 @@ public class StungunState : CharacterState
             isFiring = true;
             attackTime = details.attackTime;
             details.ActivateStungunHitbox();
+            details.UseBattery(details.stungunCost);
         }
         // activate hitbox
     }
