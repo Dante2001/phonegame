@@ -8,7 +8,7 @@ public class Monster : MonoBehaviour {
 	public void attackFinished() {
 		GetComponent<Animator> ().SetBool ("Attacking", false);
 		if (nearPlayer) {
-			GameObject.Find ("player").GetComponent<PlayerController> ().hitByMonster (this.gameObject);
+			GameObject.Find ("player").GetComponent<PlayerController> ().HitByMonster (this.gameObject);
 		}
 	}
 

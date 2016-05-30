@@ -7,35 +7,10 @@ public class PlayerController : MonoBehaviour {
     private CharacterDetails playerDetails;
 	public GameObject goPhone;
 
-	public void hitByMonster(GameObject goEnemy) {
-		if (GameManager.hasPhone) {
-			GameManager.hasPhone = false;
-			Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
-		}
-
-		float force = 1200;
-		float xForce;
-		float zForce;
-		if (goEnemy.transform.position.x > this.transform.position.x) {
-			xForce = -force;
-		} else {
-			xForce = force;
-		}
-		if (goEnemy.transform.position.z > this.transform.position.z) {
-			zForce = -force;
-		} else {
-			zForce = force;
-		}
-
-		GetComponent<Rigidbody> ().AddForce (xForce, force/2, zForce);
-		//GetComponent<Rigidbody> ().AddForceAtPosition(new Vector3(300, 0, 300),col.gameObject.transform.position);
-
-	}
-
 	// Use this for initialization
 	void Start () {
         playerDetails = new CharacterDetails(this.GetComponent<Rigidbody>(), this.GetComponentInChildren<AttackHitboxLogic>(),
-            this.GetComponentInChildren<RangedAttackLogic>());
+            this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>());
         currentState = new DefaultState(playerDetails);
 	}
 	
@@ -64,6 +39,10 @@ public class PlayerController : MonoBehaviour {
         {
             currentState.Shoot();
         }
+        if (Input.GetButtonDown("Fire3"))
+        {
+            currentState.Stungun();
+        }
         if (Input.GetButton("Sprint"))
         {
             currentState.Sprint();
@@ -75,6 +54,10 @@ public class PlayerController : MonoBehaviour {
 
     public void HitByMonster(GameObject attacker)
     {
+		if (GameManager.hasPhone) {
+			GameManager.hasPhone = false;
+			Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
+		}
         currentState.FlyBack(attacker);
         //Debug.Log("hitbymonster");
     }

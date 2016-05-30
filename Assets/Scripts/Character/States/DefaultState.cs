@@ -48,4 +48,12 @@ public class DefaultState : CharacterState {
         currentState = new ShootState(details);
         currentState.Shoot();
     }
+
+    public override void Stungun()
+    {
+        base.Stungun();
+        currentState = new StungunState(details);
+        currentState.Stungun();
+    }
+
 }

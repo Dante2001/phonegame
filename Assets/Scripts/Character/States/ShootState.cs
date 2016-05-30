@@ -22,7 +22,7 @@ public class ShootState : CharacterState {
     public override void Shoot()
     {
         base.Shoot();
-        details.FireBullet(GetTarget());
+        details.FireBullet();
         if (!isShooting)
             isShooting = true;
         shootingTimeLeft += details.shootTime;
@@ -32,13 +32,6 @@ public class ShootState : CharacterState {
     {
         base.Move(x, z);
         details.SetShootVelocity(x, z);
-    }
-
-    protected virtual GameObject GetTarget()
-    {
-        GameObject self = details.GetSelf();
-        string targetTag = details.GetEnemyTag();
-        return new GameObject();
     }
 
 }
