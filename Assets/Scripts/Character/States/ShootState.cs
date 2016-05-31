@@ -16,7 +16,7 @@ public class ShootState : CharacterState {
         {
             return new DefaultState(details);
         }
-        return this;
+        return currentState;
     }
 
     public override void Shoot()

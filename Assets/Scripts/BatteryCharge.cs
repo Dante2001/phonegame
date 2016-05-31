@@ -54,4 +54,12 @@ public class BatteryCharge : MonoBehaviour {
         if (currentBattery < 0)
             isSlowRecharge = true;
     }
+
+    public void Respawn()
+    {
+        currentBattery = maxBattery;
+        isSlowRecharge = false;
+        if (batteryBar != null)
+            batteryBar.value = currentBattery;
+    }
 }

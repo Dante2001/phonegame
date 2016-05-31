@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
     private CharacterState currentState;
     private CharacterDetails playerDetails;
 	public GameObject goPhone;
+    private GameObject instancePhone;
 
 	// Use this for initialization
 	void Start () {
@@ -28,22 +29,33 @@ public class PlayerController : MonoBehaviour {
             z = Mathf.RoundToInt(Input.GetAxisRaw("Vertical"));
         }
         currentState.Move(x, z);
-        if (Input.GetButton("Roll"))
+        if (!GameManager.isAI)
         {
-            currentState.Roll(x, z);
-        }
-        if (Input.GetButton("Fire1"))
-        {
-            currentState.Attack();
-        }
-        if (Input.GetButtonDown("Fire2"))
-        {
-            currentState.Shoot();
-        }
-        if (Input.GetButtonDown("Fire3"))
-        {
-            currentState.Stungun();
-        }
+            if (Input.GetButton("Roll"))
+            {
+                currentState.Roll(x, z);
+            }
+            if (Input.GetButton("Fire1"))
+            {
+                currentState.Attack();
+            }
+
+            if (GameManager.hasPhone)
+            {
+                if (Input.GetButtonDown("Fire2"))
+                {
+                    currentState.Shoot();
+                }
+                if (Input.GetButtonDown("Fire3"))
+                {
+                    currentState.Stungun();
+                }
+                if (Input.GetButtonDown("Heal"))
+                {
+                    currentState.Heal();
+                }
+            }
+        }       
 
         currentState = currentState.CheckAlive();
         currentState = currentState.UpdateState();
@@ -54,13 +66,33 @@ public class PlayerController : MonoBehaviour {
     {
 		if (GameManager.hasPhone) {
 			GameManager.hasPhone = false;
-			Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
+		    instancePhone = (GameObject)Instantiate (goPhone, this.gameObject.transform.position, transform.rotation);
 		}
         else
         {
             playerDetails.LoseHP();
+            if (!playerDetails.IsAlive())
+                Respawn();
         }
         currentState.FlyBack(attacker);
         //Debug.Log("hitbymonster");
+    }
+
+    public void PickUpPhone()
+    {
+        if (instancePhone != null)
+            Destroy(instancePhone);
+    }
+
+    public void SetRespawn(Transform respawn)
+    {
+        playerDetails.lastRespawn = respawn;
+    }
+
+    private void Respawn()
+    {
+        if (instancePhone != null)
+            Destroy(instancePhone);
+        GameManager.hasPhone = true;
     }
 }

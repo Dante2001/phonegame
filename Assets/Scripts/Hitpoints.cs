@@ -42,4 +42,10 @@ public class Hitpoints : MonoBehaviour {
         if (HPBar != null)
             HPBar.value = currentHitpoints;
     }
+
+    public void Respawn()
+    {
+        currentHitpoints = maxHitpoints;
+        SetHP();
+    }
 }

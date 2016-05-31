@@ -24,8 +24,7 @@ public class Phone : MonoBehaviour {
 
 		if (col.gameObject.tag.Equals ("Player") && grabbable) {
 			GameManager.hasPhone = true;
-		
-			Destroy (this.gameObject);
+            col.gameObject.GetComponent<PlayerController>().PickUpPhone();
 		}
 	}
 	

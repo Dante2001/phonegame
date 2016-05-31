@@ -29,13 +29,14 @@ public class CharacterDetails {
 
     public string enemyTag = "Monster";
 
-    public float flyTime = 0.2f;
+    public float flyTime = 0.4f;
 
     public int previousX;
     public int previousZ;
 
     public Transform lastRespawn;
     public float deathTime = 1f;
+    public float healTime = 0.2f;
 
     public int maxHP = 4;
     public float batteryRecharge = 10f;
@@ -151,8 +152,7 @@ public class CharacterDetails {
 
     public void StartFlyBack(GameObject attacker)
     {
-        GameManager.hasPhone = false;
-        float force = 1200;
+        float force = 2400;
         float xForce;
         float zForce;
         if (attacker.transform.position.x > rigidbody.position.x)   
@@ -191,7 +191,9 @@ public class CharacterDetails {
 
     public void Respawn()
     {
-        // stuff here
+        rigidbody.position = lastRespawn.position;
+        hitpoints.Respawn();
+        battery.Respawn();
     }
 
     public void LoseHP()

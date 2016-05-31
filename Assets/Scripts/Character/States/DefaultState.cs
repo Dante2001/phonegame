@@ -45,8 +45,11 @@ public class DefaultState : CharacterState {
     public override void Shoot()
     {
         base.Shoot();
-        currentState = new ShootState(details);
-        currentState.Shoot();
+        if (details.CheckBattery(details.fireballCost))
+        {
+            currentState = new ShootState(details);
+            currentState.Shoot();
+        }
     }
 
     public override void Stungun()
@@ -56,6 +59,16 @@ public class DefaultState : CharacterState {
         {
             currentState = new StungunState(details);
             currentState.Stungun();
+        }
+    }
+
+    public override void Heal()
+    {
+        base.Heal();
+        if (details.CheckBattery(details.healCost))
+        {
+            currentState = new HealState(details);
+            currentState.Heal();
         }
     }
 
