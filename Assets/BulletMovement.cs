@@ -13,9 +13,14 @@ public class BulletMovement : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col) {
 		if (col.tag.Equals ("Monster")) {
+			try {
 			//stun monster
 			col.gameObject.GetComponent<Monster>().GetStunned();
 			Destroy(this.gameObject);
+			}
+			catch (System.Exception ex) {
+
+			}
 		}
 	}
 
