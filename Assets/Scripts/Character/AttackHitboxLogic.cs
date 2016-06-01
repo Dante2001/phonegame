@@ -44,7 +44,7 @@ public class AttackHitboxLogic : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (!hitObjects.Contains(col.gameObject) && active)
+		if (!hitObjects.Contains(col.gameObject) && active && col.gameObject.tag.Equals("Monster"))
         {
             hitObjects.Add(col.gameObject);
             //hit here
