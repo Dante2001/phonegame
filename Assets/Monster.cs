@@ -6,6 +6,7 @@ public class Monster : MonoBehaviour {
 	bool nearPlayer = false;
 	bool stunned = false;
 	public void GetStunned() {
+		CancelInvoke ();
 		stunned = true;
 		Invoke ("RecoverFromStun", 1f);
 		GetComponent<Animator> ().SetBool ("Attacking", false);
@@ -35,6 +36,7 @@ public class Monster : MonoBehaviour {
 				GetComponent<Animator> ().SetBool ("Attacking", true);
 			}
 		}
+
 	}
 
 
