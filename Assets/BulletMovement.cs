@@ -2,7 +2,23 @@
 using System.Collections;
 
 public class BulletMovement : MonoBehaviour {
-	
+
+	void Start() {
+		Invoke("DestroySelf",2f);
+	}
+
+	void DestroySelf() {
+		Destroy (this.gameObject);
+	}
+
+	void OnTriggerEnter(Collider col) {
+		if (col.tag.Equals ("Monster")) {
+			//stun monster
+			col.gameObject.GetComponent<Monster>().GetStunned();
+			Destroy(this.gameObject);
+		}
+	}
+
     public void FireAtObjectAtSpeed(Vector3 direction, float speed)
     {
         Vector3 vel = direction;
