@@ -5,6 +5,12 @@ public class Monster : MonoBehaviour {
 
 	bool nearPlayer = false;
 	bool stunned = false;
+
+	public void GetHit(GameObject sword) {
+		//lose hp, then be destroyed
+		Destroy (this.gameObject);
+	}
+
 	public void GetStunned() {
 		CancelInvoke ();
 		stunned = true;
@@ -31,6 +37,9 @@ public class Monster : MonoBehaviour {
 	void OnTriggerEnter(Collider col) {
 			Debug.Log ("ENTER");
 			nearPlayer = true;
+		if (col.gameObject.tag.Equals ("Weapon")) {
+			GetHit (col.gameObject);
+		}
 		if (!stunned) {
 			if (col.gameObject.tag.Equals ("Player")) {
 				GetComponent<Animator> ().SetBool ("Attacking", true);
