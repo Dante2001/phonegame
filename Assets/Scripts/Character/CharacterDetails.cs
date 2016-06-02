@@ -8,6 +8,7 @@ public class CharacterDetails {
     private AttackHitboxLogic attackHitbox;
     private RangedAttackLogic rangedAttackLogic;
     private StungunLogic stungunLogic;
+    private CubeSpawnDespawner cubeLogic;
     private Hitpoints hitpoints;
     private BatteryCharge battery;
 
@@ -34,6 +35,13 @@ public class CharacterDetails {
     public int previousX;
     public int previousZ;
 
+    public float puzzleTime = 1f; // time to wait before puzzle starts
+
+    public float spawnCubeTime = 0.4f;
+    public float despawnCubeTime = 0.4f;
+    public float puzzleLoseTime = 1f;
+    public float puzzleWinTime = 1f;
+
     public Transform lastRespawn;
     public float deathTime = 1f;
     public float healTime = 0.2f;
@@ -47,11 +55,15 @@ public class CharacterDetails {
     public float fireballCost = 30f;
     public float stungunCost = 33f;
 
+    public FirewallManager lastFirewall;
+    public float cubeSpawnCost = 30f;
+    public float cubeDespawnCost = 20f;
+
     // not used?
     public int facing; // 0 up 1 right 2 down 3 left
 
     public CharacterDetails(Rigidbody rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl,
-        Hitpoints hp, BatteryCharge bat)
+        Hitpoints hp, BatteryCharge bat, CubeSpawnDespawner csd)
     {
         velocity = new Vector3(0, 0, 0);
         rigidbody = rb;
@@ -60,8 +72,11 @@ public class CharacterDetails {
         stungunLogic = sl;
         hitpoints = hp;
         battery = bat;
-        hitpoints.InitializeHP(maxHP);
-        battery.InitializeBattery(batteryRecharge, batterySlowRecharge, batteryBP);
+        cubeLogic = csd;
+        if (hitpoints != null)
+            hitpoints.InitializeHP(maxHP);
+        if (battery != null)
+            battery.InitializeBattery(batteryRecharge, batterySlowRecharge, batteryBP);
     }
 
     // might want to change this to be SetWalkVelocity
@@ -214,6 +229,33 @@ public class CharacterDetails {
     public void RegainHP()
     {
         hitpoints.GainHP();
+    }
+
+    public bool SpawnCube()
+    {
+        if (cubeLogic.SpawnCube())
+        {
+            UseBattery(cubeSpawnCost);
+        }
+        return lastFirewall.CheckForCompletion();
+    }
+
+    public void DespawnCube()
+    {
+        if (cubeLogic.DespawnCube())
+        {
+            battery.RegainBattery(cubeDespawnCost);
+        }
+    }
+
+    public void RestartPuzzle()
+    {
+        lastFirewall.FirewallLose();
+    }
+
+    public void WinFirewall()
+    {
+        lastFirewall.FirewallCompleted();
     }
 
     public void UpdateDetails()

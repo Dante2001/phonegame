@@ -18,23 +18,7 @@ public class StungunLogic : MonoBehaviour {
     {
         this.GetComponent<MeshRenderer>().enabled = true;
         active = true;
-        Vector3 position;
-        position.y = this.transform.localPosition.y;
         hitObjects.Clear();
-        if (z != 0)
-        {
-            position.z = z;
-            position.x = 0;
-            this.transform.localPosition = position;
-            this.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (x != 0)
-        {
-            position.z = 0;
-            position.x = x;
-            this.transform.localPosition = position;
-            this.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
     }
 
     public void Deactivate()

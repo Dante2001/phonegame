@@ -15,7 +15,22 @@ public class BatteryCharge : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (currentBattery < maxBattery)
+        if (!GameManager.isAI)
+            playerBatteryUpdate();
+        else
+            aiBatteryUpdate();
+	}
+
+    public void InitializeBattery(float recharge, float sRecharge, float bp)
+    {
+        rechargeRatePerSecond = recharge;
+        slowRechargeRatePerSecond = sRecharge;
+        slowToFastBreakingPoint = bp;
+    }
+
+    private void playerBatteryUpdate()
+    {
+        if (currentBattery < maxBattery)
         {
             if (isSlowRecharge)
             {
@@ -32,13 +47,26 @@ public class BatteryCharge : MonoBehaviour {
         }
         if (batteryBar != null)
             batteryBar.value = currentBattery;
-	}
+    }
 
-    public void InitializeBattery(float recharge, float sRecharge, float bp)
+    private void aiBatteryUpdate()
     {
-        rechargeRatePerSecond = recharge;
-        slowRechargeRatePerSecond = sRecharge;
-        slowToFastBreakingPoint = bp;
+        if (batteryBar != null)
+            batteryBar.value = currentBattery;
+    }
+
+    public void RegainBattery(float amount)
+    {
+        currentBattery += amount;
+        if (currentBattery > maxBattery)
+            currentBattery = maxBattery;
+    }
+    
+    public bool isDead()
+    {
+        if (currentBattery <= minBattery)
+            return true;
+        return false;
     }
 
     public bool CheckAmount(float cost)

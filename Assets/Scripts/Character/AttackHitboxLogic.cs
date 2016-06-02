@@ -20,17 +20,31 @@ public class AttackHitboxLogic : MonoBehaviour {
         Vector3 position;
         position.y = this.transform.localPosition.y;
         hitObjects.Clear();
-        if (z != 0)
+        if (GameManager.playerFacing == 0)
         {
-            position.z = z;
+            position.z = 1;
             position.x = 0;
             this.transform.localPosition = position;
             this.transform.rotation = Quaternion.Euler(0, 90, 0);
         }
-        else if (x != 0)
+        else if (GameManager.playerFacing == 2)
+        {
+            position.z = -1;
+            position.x = 0;
+            this.transform.localPosition = position;
+            this.transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (GameManager.playerFacing == 1)
         {
             position.z = 0;
-            position.x = x;
+            position.x = 1;
+            this.transform.localPosition = position;
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (GameManager.playerFacing == 3)
+        {
+            position.z = 0;
+            position.x = -1;
             this.transform.localPosition = position;
             this.transform.rotation = Quaternion.Euler(0, 0, 0);
         }

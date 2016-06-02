@@ -28,6 +28,15 @@ public class CharacterState {
         currentState = new FlyBackState(details);
         currentState.FlyBack(attacker);
     }
+    public virtual void Puzzle(FirewallManager fwm) 
+    {
+        currentState = new PuzzleState(details);
+        currentState.Puzzle(fwm);
+    }
+    public virtual void SpawnCube() { }
+    public virtual void DespawnCube() { }
+    public virtual void FailPuzzle() { }
+    public virtual void WinPuzzle() { }
     //public virtual void Recover() { }
     //public virtual void Stagger() { }
     public virtual CharacterState CheckAlive()
