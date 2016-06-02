@@ -6,6 +6,7 @@ public class StungunLogic : MonoBehaviour {
 
     private List<GameObject> hitObjects;
     private bool active = false;
+	public GameObject electricEffect;
 
     // Use this for initialization
     void Start()
@@ -19,12 +20,14 @@ public class StungunLogic : MonoBehaviour {
         //this.GetComponent<MeshRenderer>().enabled = true;
         active = true;
         hitObjects.Clear();
+		electricEffect.SetActive (true);
     }
 
     public void Deactivate()
     {
         //this.GetComponent<MeshRenderer>().enabled = false;
         active = false;
+		electricEffect.SetActive (false);
     }
 
     void OnTriggerEnter(Collider col)
