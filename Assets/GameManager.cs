@@ -8,4 +8,7 @@ public class GameManager : MonoBehaviour {
     public static Vector3 directionFromPlayerToMouse;
     public static bool isAI = false; // if you are controlling the AI
     public static int aiFacing = 0;
+    public static CharacterDetails playerDetails;
+    public static CharacterDetails aiDetails;
+
 }

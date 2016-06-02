@@ -13,14 +13,16 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        playerDetails = new CharacterDetails(this.GetComponent<Rigidbody>(), this.GetComponentInChildren<AttackHitboxLogic>(),
+        playerDetails = new CharacterDetails(this.GetComponent<NavMeshAgent>(), this.GetComponentInChildren<AttackHitboxLogic>(),
             this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>(), 
-            this.GetComponentInChildren<Hitpoints>(), this.GetComponentInChildren<BatteryCharge>(), null);
+            this.GetComponent<Hitpoints>(), this.GetComponent<BatteryCharge>(), null);
         
-        aiDetails = new CharacterDetails(GameObject.Find("pai").GetComponent<Rigidbody>(),
-            null, null, null, null, this.GetComponentInChildren<BatteryCharge>(), 
+        aiDetails = new CharacterDetails(GameObject.Find("pai").GetComponent<NavMeshAgent>(),
+            null, null, null, null, this.GetComponent<BatteryCharge>(), 
             GameObject.Find("pai").GetComponent<CubeSpawnDespawner>());
-        
+
+        GameManager.playerDetails = playerDetails;
+        GameManager.aiDetails = aiDetails;
         currentState = new DefaultState(playerDetails);
 	}
 	
@@ -70,12 +72,18 @@ public class PlayerController : MonoBehaviour {
         }
         else if (GameManager.isAI)
         {
-
+            if (Input.GetButtonDown("SpawnCube"))
+                currentState.SpawnCube();
+            if (Input.GetButtonDown("DespawnCube"))
+                currentState.DespawnCube();
         }
-
-        currentState = currentState.CheckAlive();
+        if (!GameManager.isAI)
+            currentState = currentState.CheckAlive();
         currentState = currentState.UpdateState();
-        playerDetails.UpdateDetails();
+        if (!GameManager.isAI)
+            playerDetails.UpdateDetails();
+        else
+            aiDetails.UpdateDetails();
 	}
 
     public void HitByMonster(GameObject attacker)
@@ -110,6 +118,12 @@ public class PlayerController : MonoBehaviour {
         if (instancePhone != null)
             Destroy(instancePhone);
         GameManager.hasPhone = true;
+    }
+
+    public void UseChargePlate(bool onPlate)
+    {
+        if (GameManager.isAI)
+            currentState.Charging(onPlate);
     }
 
     void OnTriggerEnter(Collider col)

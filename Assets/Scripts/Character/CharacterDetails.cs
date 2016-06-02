@@ -4,7 +4,7 @@ using System.Collections;
 public class CharacterDetails {
 
     private Vector3 velocity;
-    private Rigidbody rigidbody;
+    private NavMeshAgent rigidbody;
     private AttackHitboxLogic attackHitbox;
     private RangedAttackLogic rangedAttackLogic;
     private StungunLogic stungunLogic;
@@ -31,6 +31,8 @@ public class CharacterDetails {
     public string enemyTag = "Monster";
 
     public float flyTime = 0.4f;
+    public float flySpeed = 20f;
+    public Vector3 flyBackVel;
 
     public int previousX;
     public int previousZ;
@@ -47,7 +49,7 @@ public class CharacterDetails {
     public float healTime = 0.2f;
 
     public int maxHP = 4;
-    public float batteryRecharge = 10f;
+    public float batteryRecharge = 1f;
     public float batterySlowRecharge = 7f;
     public float batteryBP = 40f;
 
@@ -58,11 +60,18 @@ public class CharacterDetails {
     public FirewallManager lastFirewall;
     public float cubeSpawnCost = 30f;
     public float cubeDespawnCost = 20f;
+    public float paisMovementCost = 3;
+    public float paisBatteryRechargeCost = 40f;
+
+    public float maxCubeSpawnDistance = 2f;
+    public float maxCubeDespawnDistance = 2f;
+
+    public Vector3 paisLastPos;
 
     // not used?
     public int facing; // 0 up 1 right 2 down 3 left
 
-    public CharacterDetails(Rigidbody rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl,
+    public CharacterDetails(NavMeshAgent rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl,
         Hitpoints hp, BatteryCharge bat, CubeSpawnDespawner csd)
     {
         velocity = new Vector3(0, 0, 0);
@@ -167,34 +176,41 @@ public class CharacterDetails {
 
     public void StartFlyBack(GameObject attacker)
     {
-        float force = 2400;
+        //float force = 2400;
         float xForce;
         float zForce;
-        if (attacker.transform.position.x > rigidbody.position.x)   
+        if (attacker.transform.position.x > rigidbody.transform.position.x)   
         {
-            xForce = -force;
+            xForce = -flySpeed;
         }
         else
         {
-            xForce = force;
+            xForce = flySpeed;
         }
-        if (attacker.transform.position.z > rigidbody.position.z)
+        if (attacker.transform.position.z > rigidbody.transform.position.z)
         {
-            zForce = -force;
+            zForce = -flySpeed;
         }
         else
         {
-            zForce = force;
+            zForce = flySpeed;
         }
 
-        rigidbody.AddForce(xForce, force / 2, zForce);
+        flyBackVel = new Vector3(xForce, 0, zForce);
+        // cause apparently navmesh work better with isKinematic =[
+        //rigidbody.AddForce(xForce, force / 2, zForce);
         //Debug.Log("applied force");
+    }
+
+    public void UpdateFlyBack(float multiplier)
+    {
+        velocity += flyBackVel * multiplier;
     }
 
     public void EndFlyBack()
     {
         rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
+        //rigidbody.angularVelocity = Vector3.zero;
     }
 
     public bool IsAlive()
@@ -206,7 +222,7 @@ public class CharacterDetails {
 
     public void Respawn()
     {
-        rigidbody.position = lastRespawn.position;
+        rigidbody.transform.position = lastRespawn.position;
         hitpoints.Respawn();
         battery.Respawn();
     }
@@ -233,7 +249,7 @@ public class CharacterDetails {
 
     public bool SpawnCube()
     {
-        if (cubeLogic.SpawnCube())
+        if (cubeLogic.SpawnCube(maxCubeSpawnDistance))
         {
             UseBattery(cubeSpawnCost);
         }
@@ -242,7 +258,7 @@ public class CharacterDetails {
 
     public void DespawnCube()
     {
-        if (cubeLogic.DespawnCube())
+        if (cubeLogic.DespawnCube(maxCubeDespawnDistance))
         {
             battery.RegainBattery(cubeDespawnCost);
         }
@@ -251,11 +267,29 @@ public class CharacterDetails {
     public void RestartPuzzle()
     {
         lastFirewall.FirewallLose();
+        cubeLogic.RestartPuzzle();
+        battery.Respawn();
     }
 
     public void WinFirewall()
     {
         lastFirewall.FirewallCompleted();
+    }
+
+    public void DrainBatteryFromMovement()
+    {
+        float drainAmt = (rigidbody.transform.position - paisLastPos).magnitude * paisMovementCost * Time.deltaTime;
+        UseBattery(drainAmt);
+    }
+
+    public void SetPAIsLastPos()
+    {
+        paisLastPos = rigidbody.transform.position;
+    }
+
+    public void RechargeBattery()
+    {
+        battery.RegainBattery(Time.deltaTime * paisBatteryRechargeCost);
     }
 
     public void UpdateDetails()

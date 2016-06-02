@@ -35,6 +35,7 @@ public class CharacterState {
     }
     public virtual void SpawnCube() { }
     public virtual void DespawnCube() { }
+    public virtual void Charging(bool onPlate) { }
     public virtual void FailPuzzle() { }
     public virtual void WinPuzzle() { }
     //public virtual void Recover() { }

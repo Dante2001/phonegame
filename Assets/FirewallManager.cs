@@ -12,7 +12,7 @@ public class FirewallManager : MonoBehaviour {
 
     public void StartFirewall()
     {
-        pai.GetComponent<Renderer>().enabled = true;
+        pai.GetComponent<MeshRenderer>().enabled = true;
         pai.transform.position = new Vector3(paiStart.position.x, pai.transform.position.y, paiStart.position.z);
         Camera.main.GetComponent<CameraFollow>().follow = pai;
     }
@@ -40,6 +40,8 @@ public class FirewallManager : MonoBehaviour {
     {
         Destroy(entrance);
         Destroy(exit);
+        pai.GetComponent<MeshRenderer>().enabled = false;
         Camera.main.GetComponent<CameraFollow>().follow = GameObject.Find("player");
+        Destroy(this.gameObject);
     }
 }

@@ -5,53 +5,62 @@ using System.Collections.Generic;
 public class CubeSpawnDespawner : MonoBehaviour {
 
     public GameObject cubeToSpawn;
-    private List<GameObject> spawnedCubes;
+    private List<GameObject> spawnedCubes = new List<GameObject>();
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public bool SpawnCube()
+    public bool SpawnCube(float maxSpawnDistance)
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float hitdist = 10.0f;
         if (Physics.Raycast(ray, out hit, hitdist))
         {
-            if (hit.collider.name.StartsWith("Cube Plate"))
+            if ((hit.point - this.transform.position).magnitude <= maxSpawnDistance)
             {
-                hit.collider.GetComponent<CubeTrigger>().SpawnCube();
-                return true;
-            }
-            else if (!hit.collider.name.StartsWith("SpawnedCube"))
-            {
-                spawnedCubes.Add((GameObject)Instantiate(cubeToSpawn, hit.point + Vector3.up, Quaternion.identity));
-                return true;
+                if (hit.collider.name.StartsWith("CubePlate"))
+                {
+                    hit.collider.GetComponent<CubeTrigger>().SpawnCube();
+                    return true;
+                }
+                else if (!hit.collider.name.StartsWith("SpawnedCube"))
+                {
+                    GameObject spawnedCube = (GameObject)Instantiate(cubeToSpawn, hit.point + Vector3.up, Quaternion.identity);
+                    spawnedCubes.Add(spawnedCube);
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public bool DespawnCube()
+    public bool DespawnCube(float maxDespawnDistance)
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float hitdist = 10.0f;
         if (Physics.Raycast(ray, out hit, hitdist))
         {
-            if (hit.collider.name.StartsWith("SpawnedCube"))
+            if ((hit.point - this.transform.position).magnitude <= maxDespawnDistance)
             {
-                hit.collider.GetComponent<CubeTrigger>().DespawnCube();
-                return true;
+                if (hit.collider.name.StartsWith("SpawnedCube"))
+                {
+                    GameObject parentOfCube = hit.collider.GetComponent<CubeDetails>().parent;
+                    if (parentOfCube != null)
+                       parentOfCube.GetComponent<CubeTrigger>().DespawnCube();
+                    else
+                        Destroy(hit.collider.gameObject);
+                    return true;
+                }
             }
         }
         return false;
     }
 
+    public void RestartPuzzle()
+    {
+        for (int i = 0; i < spawnedCubes.Count; i++ )
+        {
+            Destroy(spawnedCubes[i]);
+        }
+        spawnedCubes.Clear();
+    }
 }

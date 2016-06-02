@@ -17,8 +17,9 @@ public class PuzzleState : CharacterState {
         }
         else
         {
-            currentState = new DefaultAIState(details);
+            currentState = new DefaultAIState(GameManager.aiDetails);
             GameManager.isAI = true;
+            GameManager.aiDetails.lastFirewall = firewallManager;
             firewallManager.StartFirewall();
         }
         return currentState;

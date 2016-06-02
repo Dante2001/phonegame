@@ -19,6 +19,7 @@ public class CubeTrigger : MonoBehaviour {
     {
         hasCube = true;
         spawnedCube = (GameObject)Instantiate(cubeToSpawn, cubePosOffset + this.transform.position, Quaternion.identity);
+        spawnedCube.GetComponent<CubeDetails>().parent = this.gameObject;
     }
 
     public void DespawnCube()
