@@ -25,18 +25,19 @@ public class ShootState : CharacterState {
         
         if (!isShooting)
         {
+            details.animator.SetTrigger("toFireball");
             details.FireBullet();
             isShooting = true;
             details.UseBattery(details.fireballCost);
             shootingTimeLeft += details.shootTime;
         }
-        else if (details.CheckBattery(details.fireballCost))
-        {
-            details.FireBullet();
-            isShooting = true;
-            details.UseBattery(details.fireballCost);
-            shootingTimeLeft += details.shootTime;
-        }
+        //else if (details.CheckBattery(details.fireballCost))
+        //{
+        //    details.FireBullet();
+        //    isShooting = true;
+        //    details.UseBattery(details.fireballCost);
+        //    shootingTimeLeft += details.shootTime;
+        //}
         
     }
 

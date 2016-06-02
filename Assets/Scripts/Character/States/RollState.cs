@@ -25,6 +25,7 @@ public class RollState : CharacterState {
     {
         if (!isRolling)
         {
+            details.animator.SetTrigger("toRoll");
             isRolling = true;
             rollDirection = new Vector2(x, z);
             rollTime = details.rollTime;

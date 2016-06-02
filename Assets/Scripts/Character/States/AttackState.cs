@@ -28,6 +28,7 @@ public class AttackState : CharacterState {
     {
         if (!isAttacking)
         {
+            details.animator.SetTrigger("toAttack");
             isAttacking = true;
             attackTime = details.attackTime;
             details.ActivateHitbox();

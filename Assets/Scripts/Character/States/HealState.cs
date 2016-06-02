@@ -27,6 +27,7 @@ public class HealState : CharacterState {
         base.Heal();
         if (!isHealing)
         {
+            details.animator.SetTrigger("toHeal");
             isHealing = true;
             healTime = details.healTime;
             details.UseBattery(details.healCost);

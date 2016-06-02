@@ -11,28 +11,53 @@ public class StungunLogic : MonoBehaviour {
     void Start()
     {
         hitObjects = new List<GameObject>();
-        this.GetComponent<MeshRenderer>().enabled = false;
+        //this.GetComponent<MeshRenderer>().enabled = false;
     }
 
     public void Activate(int x, int z)
     {
-        this.GetComponent<MeshRenderer>().enabled = true;
+        //this.GetComponent<MeshRenderer>().enabled = true;
         active = true;
         hitObjects.Clear();
     }
 
     public void Deactivate()
     {
-        this.GetComponent<MeshRenderer>().enabled = false;
+        //this.GetComponent<MeshRenderer>().enabled = false;
         active = false;
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if (!hitObjects.Contains(col.gameObject) && active)
+        if (!hitObjects.Contains(col.gameObject) && active && col.gameObject.tag.Equals("Monster"))
+        {            
+            try
+            {
+                //stun monster
+                col.transform.root.GetComponentInChildren<Monster>().GetStunned();
+                hitObjects.Add(col.gameObject);
+            }
+            catch (System.Exception ex)
+            {
+
+            }
+        }
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        if (!hitObjects.Contains(col.gameObject) && active && col.gameObject.tag.Equals("Monster"))
         {
-            hitObjects.Add(col.gameObject);
-            //hit here
+            try
+            {
+                //stun monster
+                col.transform.root.GetComponentInChildren<Monster>().GetStunned();
+                hitObjects.Add(col.gameObject);
+            }
+            catch (System.Exception ex)
+            {
+
+            }
         }
     }
 }

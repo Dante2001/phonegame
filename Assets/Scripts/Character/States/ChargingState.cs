@@ -20,4 +20,7 @@ public class ChargingState : CharacterState {
         else
             currentState = new DefaultAIState(details);
     }
+
+    public override void FlyBack(GameObject attacker) { }
+
 }

@@ -30,6 +30,7 @@ public class FlyBackState : CharacterState {
     {
         if (!isFlyingBack)
         {
+            details.animator.SetTrigger("toKnockback");
             flyTime = details.flyTime;
             isFlyingBack = true;
             details.StartFlyBack(attacker);

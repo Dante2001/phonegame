@@ -10,6 +10,9 @@ public class FirewallManager : MonoBehaviour {
     public GameObject exit;
     public GameObject pai;
 
+    public List<GameObject> enemiesToSpawn;
+    public List<GameObject> enemySpawnPosition;
+
     public void StartFirewall()
     {
         pai.GetComponent<MeshRenderer>().enabled = true;
@@ -36,12 +39,32 @@ public class FirewallManager : MonoBehaviour {
         return result;
     }
 
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < enemiesToSpawn.Count; i++)
+        {
+            GameObject newEnemy = (GameObject)Instantiate(enemiesToSpawn[i], enemySpawnPosition[i].transform.position, Quaternion.identity);
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(enemySpawnPosition[i].transform.position, out closestHit, 500, 1))
+            {
+                newEnemy.GetComponentInChildren<NavMeshAgent>().gameObject.transform.position = closestHit.position;
+                newEnemy.GetComponentInChildren<NavMeshAgent>().enabled = true;
+                newEnemy.GetComponentInChildren<AIFollow>().enabled = true;
+                newEnemy.GetComponentInChildren<AIFollow>().victim = GameObject.Find("player");
+                newEnemy.GetComponentInChildren<AIFollow>().follow = true;
+                newEnemy.GetComponentInChildren<MonsterRespawn>().spawnPosition = closestHit.position;
+            }
+        }
+    }
+
     public void FirewallCompleted()
     {
         Destroy(entrance);
         Destroy(exit);
         pai.GetComponent<MeshRenderer>().enabled = false;
         Camera.main.GetComponent<CameraFollow>().follow = GameObject.Find("player");
-        Destroy(this.gameObject);
+        SpawnEnemies();
+        this.gameObject.name = "CompletedPuzzleTerminal";
+        this.GetComponent<FirewallManager>().enabled = false;
     }
 }

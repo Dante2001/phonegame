@@ -15,7 +15,7 @@ public class BulletMovement : MonoBehaviour {
 		if (col.tag.Equals ("Monster")) {
 			try {
 			//stun monster
-			col.gameObject.GetComponent<Monster>().GetStunned();
+            col.transform.root.GetComponentInChildren<Monster>().GetHit();
 			Destroy(this.gameObject);
 			}
 			catch (System.Exception ex) {

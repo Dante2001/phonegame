@@ -10,12 +10,12 @@ public class AttackHitboxLogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         hitObjects = new List<GameObject>();
-        this.GetComponent<MeshRenderer>().enabled = false;
+        //this.GetComponent<MeshRenderer>().enabled = false;
 	}
 
     public void Activate(int x, int z)
     {
-        this.GetComponent<MeshRenderer>().enabled = true;
+        //this.GetComponent<MeshRenderer>().enabled = true;
         active = true;
         Vector3 position;
         position.y = this.transform.localPosition.y;
@@ -52,7 +52,7 @@ public class AttackHitboxLogic : MonoBehaviour {
 
     public void Deactivate()
     {
-        this.GetComponent<MeshRenderer>().enabled = false;
+        //this.GetComponent<MeshRenderer>().enabled = false;
         active = false;
     }
 
@@ -61,7 +61,16 @@ public class AttackHitboxLogic : MonoBehaviour {
 		if (!hitObjects.Contains(col.gameObject) && active && col.gameObject.tag.Equals("Monster"))
         {
             hitObjects.Add(col.gameObject);
-            //hit here
+            col.transform.root.GetComponentInChildren<Monster>().GetHit();
+        }
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        if (!hitObjects.Contains(col.gameObject) && active && col.gameObject.tag.Equals("Monster"))
+        {
+            hitObjects.Add(col.gameObject);
+            col.transform.root.GetComponentInChildren<Monster>().GetHit();
         }
     }
 

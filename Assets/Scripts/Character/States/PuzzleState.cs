@@ -29,10 +29,13 @@ public class PuzzleState : CharacterState {
     {
         if (!isStarting)
         {
+            details.animator.SetTrigger("toPuzzle");
             timeTillStart = details.puzzleTime;
             isStarting = true;
             firewallManager = fwm;
         }
     }
+
+    public override void FlyBack(GameObject attacker) { }
 
 }

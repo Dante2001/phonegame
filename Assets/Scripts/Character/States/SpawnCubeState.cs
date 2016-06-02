@@ -36,4 +36,6 @@ public class SpawnCubeState : CharacterState {
         }
     }
 
+    public override void FlyBack(GameObject attacker) { }
+
 }

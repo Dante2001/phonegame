@@ -60,5 +60,7 @@ public class DefaultAIState : CharacterState {
         currentState.WinPuzzle();
     }
 
+    public override void FlyBack(GameObject attacker) { }
+
     public override void Puzzle(FirewallManager fwm) { }
 }

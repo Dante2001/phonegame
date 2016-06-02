@@ -28,4 +28,7 @@ public class DespawnCubeState : CharacterState {
             despawnTime = details.despawnCubeTime;
         }
     }
+
+    public override void FlyBack(GameObject attacker) { }
+
 }

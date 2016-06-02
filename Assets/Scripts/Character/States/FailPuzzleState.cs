@@ -30,4 +30,5 @@ public class FailPuzzleState : CharacterState {
         }
     }
 
+    public override void FlyBack(GameObject attacker) { }
 }

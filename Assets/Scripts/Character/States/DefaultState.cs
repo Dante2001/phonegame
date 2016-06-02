@@ -8,6 +8,17 @@ public class DefaultState : CharacterState {
     public override void Move(int x, int z)
     {
         base.Move(x,z);
+
+        if (x == 0 && z == 0)
+        {
+            details.animator.SetBool("IdleToRun", false);
+           // if (details.animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+             //   details.animator.SetTrigger("toIdle");
+        }
+        else
+        {
+            details.animator.SetBool("IdleToRun", true);
+        }
         details.SetVelocityX(x);
         details.SetVelocityZ(z);
         //if (x == 1)

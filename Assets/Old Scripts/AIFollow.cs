@@ -9,6 +9,7 @@ public class AIFollow : MonoBehaviour {
     public bool follow;
     private Vector3 position;
     private Animator animator;
+    private float rotation;
 	// Use this for initialization
 	void Start () {
         position = new Vector3();
@@ -32,7 +33,7 @@ public class AIFollow : MonoBehaviour {
 
     void UpdateSprite()
     {
-        float rotation = this.transform.rotation.eulerAngles.y;
+        rotation = this.transform.rotation.eulerAngles.y;
 
         if ((rotation >= 315f && rotation <= 0f) || rotation < 45f)
             animator.SetFloat("Direction", 0f);
@@ -42,5 +43,10 @@ public class AIFollow : MonoBehaviour {
             animator.SetFloat("Direction", 0.5f);
         else // rotation >= 225f && rotation < 315f
             animator.SetFloat("Direction", 1.5f);         
+    }
+
+    public float GetRotation()
+    {
+        return rotation;
     }
 }

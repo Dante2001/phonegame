@@ -30,4 +30,6 @@ public class WinPuzzleState : CharacterState {
         }
     }
 
+    public override void FlyBack(GameObject attacker) { }
+
 }

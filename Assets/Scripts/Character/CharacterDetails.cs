@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharacterDetails {
 
@@ -11,6 +12,10 @@ public class CharacterDetails {
     private CubeSpawnDespawner cubeLogic;
     private Hitpoints hitpoints;
     private BatteryCharge battery;
+    private PersonalSoundManager personalSoundManager;
+    private Dictionary<string, List<AudioClip>> dictOfClips;
+
+    public Animator animator;
 
     public float defaultSpeed = 4f;
 
@@ -72,7 +77,7 @@ public class CharacterDetails {
     public int facing; // 0 up 1 right 2 down 3 left
 
     public CharacterDetails(NavMeshAgent rb, AttackHitboxLogic ahl, RangedAttackLogic ral, StungunLogic sl,
-        Hitpoints hp, BatteryCharge bat, CubeSpawnDespawner csd)
+        Hitpoints hp, BatteryCharge bat, CubeSpawnDespawner csd, PersonalSoundManager psm, Dictionary<string, List<AudioClip>> dac)
     {
         velocity = new Vector3(0, 0, 0);
         rigidbody = rb;
@@ -82,6 +87,8 @@ public class CharacterDetails {
         hitpoints = hp;
         battery = bat;
         cubeLogic = csd;
+        personalSoundManager = psm;
+        dictOfClips = dac;
         if (hitpoints != null)
             hitpoints.InitializeHP(maxHP);
         if (battery != null)
@@ -290,6 +297,11 @@ public class CharacterDetails {
     public void RechargeBattery()
     {
         battery.RegainBattery(Time.deltaTime * paisBatteryRechargeCost);
+    }
+
+    public void PlaySFX(string sfx)
+    {
+        personalSoundManager.PlayEfxRandom(dictOfClips[sfx]);
     }
 
     public void UpdateDetails()

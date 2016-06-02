@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
@@ -11,15 +12,54 @@ public class PlayerController : MonoBehaviour {
     private bool atPuzzleTerminal = false;
     private FirewallManager currentFirewall;
 
-	// Use this for initialization
+    public List<AudioClip> deathSFX;
+    public List<AudioClip> attackSFX;
+    public List<AudioClip> damagedSFX;
+    public List<AudioClip> healSFX;
+    public List<AudioClip> fireballSFX;
+    public List<AudioClip> stunSFX;
+    public List<AudioClip> puzzleTerminalSFX;
+    public List<AudioClip> rollSFX;
+    public List<AudioClip> chargingSFX;
+    public List<AudioClip> spawnCubeSFX;
+    public List<AudioClip> despawnCubeSFX;
+    public List<AudioClip> winPuzzleSFX;
+    public List<AudioClip> losePuzzleSFX;
+
+    private Dictionary<string, List<AudioClip>> sfxDict;
+
+    void Awake()
+    {
+        sfxDict = new Dictionary<string,List<AudioClip>>();
+        sfxDict.Add("death", deathSFX);
+        sfxDict.Add("attack", attackSFX);
+        sfxDict.Add("damage", damagedSFX);
+        sfxDict.Add("heal", healSFX);
+        sfxDict.Add("fireball", fireballSFX);
+        sfxDict.Add("stun", stunSFX);
+        sfxDict.Add("puzzleTerminal", puzzleTerminalSFX);
+        sfxDict.Add("roll", rollSFX);
+        sfxDict.Add("charging", chargingSFX);
+        sfxDict.Add("spawnCube", spawnCubeSFX);
+        sfxDict.Add("despawnCube", despawnCubeSFX);
+        sfxDict.Add("winPuzzle", winPuzzleSFX);
+        sfxDict.Add("losePuzzle", losePuzzleSFX);
+    }
+
+    // Use this for initialization
 	void Start () {
         playerDetails = new CharacterDetails(this.GetComponent<NavMeshAgent>(), this.GetComponentInChildren<AttackHitboxLogic>(),
             this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>(), 
-            this.GetComponent<Hitpoints>(), this.GetComponent<BatteryCharge>(), null);
+            this.GetComponent<Hitpoints>(), this.GetComponent<BatteryCharge>(), null, 
+            this.GetComponent<PersonalSoundManager>(), sfxDict);
         
         aiDetails = new CharacterDetails(GameObject.Find("pai").GetComponent<NavMeshAgent>(),
-            null, null, null, null, this.GetComponent<BatteryCharge>(), 
-            GameObject.Find("pai").GetComponent<CubeSpawnDespawner>());
+            null, null, null, null, this.GetComponent<BatteryCharge>(),
+            GameObject.Find("pai").GetComponent<CubeSpawnDespawner>(), 
+            GameObject.Find("pai").GetComponent<PersonalSoundManager>(), sfxDict);
+
+        playerDetails.animator = this.GetComponentInChildren<Animator>();
+        aiDetails.animator = GameObject.Find("pai").GetComponent<Animator>();
 
         GameManager.playerDetails = playerDetails;
         GameManager.aiDetails = aiDetails;
