@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Monster : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class Monster : MonoBehaviour {
     public float acceleration = 100f;
     public AIFollow aifollow;
     public NavMeshAgent navAgent;
+    public List<AudioClip> attackSfx;
+    public List<AudioClip> hitSfx;
 
 	public void GetHit() {
         Debug.Log("gothit");
@@ -64,14 +67,14 @@ public class Monster : MonoBehaviour {
         float rotation = aifollow.GetRotation();
         if ((rotation >= 315f && rotation <= 0f) || rotation < 45f)
         {
-            this.GetComponent<CapsuleCollider>().center = new Vector3(0f, 1.8f, 1f);
+            this.GetComponent<CapsuleCollider>().center = new Vector3(0f, 1f, 1f);
         }
         else if (rotation >= 45f && rotation < 135f)
-            this.GetComponent<CapsuleCollider>().center = new Vector3(1.8f, 0f, 1f);
+            this.GetComponent<CapsuleCollider>().center = new Vector3(1f, 0f, 1f);
         else if (rotation >= 135f && rotation < 225f)
-            this.GetComponent<CapsuleCollider>().center = new Vector3(0f, -1.8f, 1f);
+            this.GetComponent<CapsuleCollider>().center = new Vector3(0f, -1f, 1f);
         else // rotation >= 225f && rotation < 315f
-            this.GetComponent<CapsuleCollider>().center = new Vector3(-1.8f, 0f, 1f);  
+            this.GetComponent<CapsuleCollider>().center = new Vector3(-1f, 0f, 1f);  
     }
 
 	void OnTriggerStay(Collider col) {
@@ -82,6 +85,12 @@ public class Monster : MonoBehaviour {
 			}
 		}
 	}
+
+    public void Respawn()
+    {
+        CancelInvoke();
+        aifollow.follow = false;
+    }
 
 	// Use this for initialization
 	void Start () {

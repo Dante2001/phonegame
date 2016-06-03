@@ -3,13 +3,21 @@ using System.Collections;
 
 public class AIDetection : MonoBehaviour {
 
-    public MonsterRespawn respawner;
+    public AIFollow aifollow;
 
 	void OnTriggerEnter(Collider col)
     {
-        if (col.name == "player" && respawner.isRespawned)
+        if (col.name == "player")
         {
-            this.GetComponentInParent<AIFollow>().follow = true;
+            aifollow.follow = true;
+            this.gameObject.SetActive(false);
+        }
+    }
+    void OnTriggerStay(Collider col)
+    {
+        if (col.name == "player")
+        {
+            aifollow.follow = true;
             this.gameObject.SetActive(false);
         }
     }

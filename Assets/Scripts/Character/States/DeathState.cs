@@ -6,6 +6,7 @@ public class DeathState : CharacterState
 
     protected bool isDieing = false;
     protected float deathTime;
+    protected bool isRespawned = false;
 
     public DeathState(CharacterDetails dets) : base(dets) 
     {
@@ -18,6 +19,8 @@ public class DeathState : CharacterState
         }
     }
 
+    public override void FlyBack(GameObject attacker) { }
+
     public override CharacterState UpdateState()
     {
         if (deathTime > 0)
@@ -27,11 +30,12 @@ public class DeathState : CharacterState
         }
         else
         {
+            details.animator.SetTrigger("toIdle");
             details.Respawn();
             return new DefaultState(details);
         }
     }
-
+    public virtual void Puzzle(FirewallManager fwm) { }
     public override CharacterState CheckAlive()
     {
         return currentState;

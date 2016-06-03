@@ -48,15 +48,16 @@ public class FirewallManager : MonoBehaviour {
     {
         for (int i = 0; i < enemiesToSpawn.Count; i++)
         {
-            GameObject newEnemy = (GameObject)Instantiate(enemiesToSpawn[i], enemySpawnPosition[i].transform.position, Quaternion.identity);
+            
             NavMeshHit closestHit;
             if (NavMesh.SamplePosition(enemySpawnPosition[i].transform.position, out closestHit, 500, 1))
             {
-                newEnemy.GetComponentInChildren<NavMeshAgent>().gameObject.transform.position = closestHit.position;
+                GameObject newEnemy = (GameObject)Instantiate(enemiesToSpawn[i], closestHit.position, Quaternion.identity);
+                //newEnemy.GetComponentInChildren<NavMeshAgent>().gameObject.transform.position = closestHit.position;
                 newEnemy.GetComponentInChildren<NavMeshAgent>().enabled = true;
                 newEnemy.GetComponentInChildren<AIFollow>().enabled = true;
                 newEnemy.GetComponentInChildren<AIFollow>().victim = GameObject.Find("player");
-                newEnemy.GetComponentInChildren<AIFollow>().follow = true;
+                newEnemy.GetComponentInChildren<AIFollow>().follow = false;
                 newEnemy.GetComponentInChildren<MonsterRespawn>().spawnPosition = closestHit.position;
             }
         }

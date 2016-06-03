@@ -43,7 +43,7 @@ public class CharacterState {
     public virtual CharacterState CheckAlive()
     {
         if (!details.IsAlive())
-            return new DeathState(details);
+            currentState = new DeathState(details);
         return currentState;
     }
 }

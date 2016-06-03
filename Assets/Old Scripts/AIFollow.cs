@@ -21,9 +21,12 @@ public class AIFollow : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (victim != null && follow)
+        {
             navAgent.SetDestination(victim.transform.position);
+            navAgent.Resume();
+        }
         else if (!follow && victim != null)
-            navAgent.SetDestination(this.transform.position);
+            navAgent.Stop();
         
         position.x = this.transform.position.x;
         position.z = this.transform.position.z;
