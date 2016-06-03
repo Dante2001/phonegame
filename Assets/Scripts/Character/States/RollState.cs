@@ -37,6 +37,10 @@ public class RollState : CharacterState {
             else
                 rollDir = 1.5f;
             details.animator.SetFloat("DirectionRoll", rollDir);
+            details.PlaySFX("roll");
+            int rand = Random.Range(0, 8);
+            if (rand == 4)
+                details.PlayOther("paiOther");
             details.animator.SetTrigger("toRoll");
             isRolling = true;
             rollDirection = new Vector2(x, z);

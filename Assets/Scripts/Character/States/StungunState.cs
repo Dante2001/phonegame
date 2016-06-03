@@ -30,6 +30,7 @@ public class StungunState : CharacterState
         if (!isFiring)
         {
             details.animator.SetTrigger("toStungun");
+            details.PlaySFX("stun");
             isFiring = true;
             attackTime = details.stungunTime;
             details.ActivateStungunHitbox();

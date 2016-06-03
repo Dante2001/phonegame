@@ -25,6 +25,8 @@ public class WinPuzzleState : CharacterState {
     {
         if (!isWinning)
         {
+            details.animator.SetTrigger("toWin");
+            details.PlaySFX("winPuzzle");
             isWinning = true;
             winTime = details.puzzleWinTime;
         }

@@ -31,6 +31,7 @@ public class FlyBackState : CharacterState {
         if (!isFlyingBack)
         {
             details.animator.SetTrigger("toKnockback");
+            details.PlaySFX("damage");
             flyTime = details.flyTime;
             isFlyingBack = true;
             details.StartFlyBack(attacker);

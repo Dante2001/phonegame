@@ -29,6 +29,10 @@ public class AttackState : CharacterState {
         if (!isAttacking)
         {
             details.animator.SetTrigger("toAttack");
+            details.PlaySFX("attack");
+            int rand = Random.Range(0, 8);
+            if (rand == 4)
+                details.PlayOther("otherAttack");
             isAttacking = true;
             attackTime = details.attackTime;
             details.ActivateHitbox();

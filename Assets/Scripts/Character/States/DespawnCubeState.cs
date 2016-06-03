@@ -24,6 +24,8 @@ public class DespawnCubeState : CharacterState {
     {
         if (!isDespawning)
         {
+            details.animator.SetTrigger("toDespawn");
+            details.PlaySFX("despawnCube");
             isDespawning = true;
             despawnTime = details.despawnCubeTime;
         }

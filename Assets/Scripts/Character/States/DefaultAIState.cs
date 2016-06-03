@@ -25,6 +25,10 @@ public class DefaultAIState : CharacterState {
         details.SetVelocityZ(z);
         if (x != 0 || z != 0)
            details.DrainBatteryFromMovement();
+        if (x == 0 && z == 0)
+            details.animator.SetBool("IdleToRun", false);
+        else
+            details.animator.SetBool("IdleToRun", true);
     }
 
     public override void Charging(bool onPlate)

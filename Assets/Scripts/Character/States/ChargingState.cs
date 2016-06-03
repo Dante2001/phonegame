@@ -3,7 +3,11 @@ using System.Collections;
 
 public class ChargingState : CharacterState {
 
-    public ChargingState(CharacterDetails dets) : base(dets) { }
+    public ChargingState(CharacterDetails dets) : base(dets) 
+    {
+        details.PlaySFX("charging");
+        details.animator.SetTrigger("toCharge");
+    }
 
     public override void Move(int x, int z)
     {
@@ -18,7 +22,10 @@ public class ChargingState : CharacterState {
         if (onPlate)
             details.RechargeBattery();
         else
+        {
             currentState = new DefaultAIState(details);
+            details.StopSFX();
+        }
     }
 
     public override void FlyBack(GameObject attacker) { }

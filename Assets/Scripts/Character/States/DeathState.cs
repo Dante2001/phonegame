@@ -9,8 +9,13 @@ public class DeathState : CharacterState
 
     public DeathState(CharacterDetails dets) : base(dets) 
     {
-        isDieing = true;
-        deathTime = details.deathTime;
+        if (!isDieing)
+        {
+            details.animator.SetTrigger("toDeath");
+            details.PlaySFX("death");
+            isDieing = true;
+            deathTime = details.deathTime;
+        }
     }
 
     public override CharacterState UpdateState()

@@ -24,6 +24,8 @@ public class FailPuzzleState : CharacterState {
     {
         if (!isFailing)
         {
+            details.animator.SetTrigger("toLose");
+            details.PlaySFX("losePuzzle");
             Debug.Log("FAIL");
             isFailing = true;
             failTime = details.puzzleLoseTime;

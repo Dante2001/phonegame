@@ -30,6 +30,7 @@ public class PuzzleState : CharacterState {
         if (!isStarting)
         {
             details.animator.SetTrigger("toPuzzle");
+            details.PlaySFX("puzzleTerminal");
             timeTillStart = details.puzzleTime;
             isStarting = true;
             firewallManager = fwm;

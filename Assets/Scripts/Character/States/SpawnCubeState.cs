@@ -30,6 +30,8 @@ public class SpawnCubeState : CharacterState {
     {
         if (!isSpawning)
         {
+            details.animator.SetTrigger("toSpawn");
+            details.PlaySFX("spawnCube");
             isSpawning = true;
             spawnTime = details.spawnCubeTime;
             wonPuzzle = details.SpawnCube();

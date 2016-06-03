@@ -15,8 +15,10 @@ public class FirewallManager : MonoBehaviour {
 
     public void StartFirewall()
     {
-        pai.GetComponent<MeshRenderer>().enabled = true;
-        pai.transform.position = new Vector3(paiStart.position.x, pai.transform.position.y, paiStart.position.z);
+        pai.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        NavMeshHit closestHit;
+        if (NavMesh.SamplePosition(new Vector3(paiStart.position.x, pai.transform.position.y, paiStart.position.z), out closestHit, 500, 1))
+            pai.transform.position = closestHit.position;
         Camera.main.GetComponent<CameraFollow>().follow = pai;
     }
 
@@ -27,6 +29,9 @@ public class FirewallManager : MonoBehaviour {
         {
             cubePlates[i].RestartFirewall();
         }
+        NavMeshHit closestHit;
+        if (NavMesh.SamplePosition(new Vector3(paiStart.position.x, pai.transform.position.y, paiStart.position.z), out closestHit, 500, 1))
+            pai.transform.position = closestHit.position;
     }
 
     public bool CheckForCompletion()
@@ -61,7 +66,7 @@ public class FirewallManager : MonoBehaviour {
     {
         Destroy(entrance);
         Destroy(exit);
-        pai.GetComponent<MeshRenderer>().enabled = false;
+        pai.GetComponentInChildren<SpriteRenderer>().enabled = false;
         Camera.main.GetComponent<CameraFollow>().follow = GameObject.Find("player");
         SpawnEnemies();
         this.gameObject.name = "CompletedPuzzleTerminal";

@@ -11,10 +11,10 @@ public class PlayerLookAtMouse : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //if (!isAI)
+        if (!isAI)
             animator = GameObject.Find("player").GetComponentInChildren<Animator>();
-        //else
-           // animator = GameObject.Find("pai").GetComponentInChildren<Animator>();
+        else
+            animator = GameObject.Find("pai").GetComponentInChildren<Animator>();
 	}
 	
 	// Update is called once per frame

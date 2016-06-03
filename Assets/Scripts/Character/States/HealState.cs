@@ -28,6 +28,10 @@ public class HealState : CharacterState {
         if (!isHealing)
         {
             details.animator.SetTrigger("toHeal");
+            details.PlaySFX("heal");
+            int rand = Random.Range(0, 8);
+            if (rand == 4)
+                details.PlayOther("paiOther2");
             isHealing = true;
             healTime = details.healTime;
             details.UseBattery(details.healCost);

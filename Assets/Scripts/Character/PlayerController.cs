@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour {
     public List<AudioClip> despawnCubeSFX;
     public List<AudioClip> winPuzzleSFX;
     public List<AudioClip> losePuzzleSFX;
+    public List<AudioClip> otherAttack;
+    public List<AudioClip> paiOther;
+    public List<AudioClip> paiOther2;
 
     private Dictionary<string, List<AudioClip>> sfxDict;
 
@@ -44,6 +47,10 @@ public class PlayerController : MonoBehaviour {
         sfxDict.Add("despawnCube", despawnCubeSFX);
         sfxDict.Add("winPuzzle", winPuzzleSFX);
         sfxDict.Add("losePuzzle", losePuzzleSFX);
+        sfxDict.Add("otherAttack", otherAttack);
+        sfxDict.Add("paiOther", paiOther);
+        sfxDict.Add("paiOther2", paiOther2);
+
     }
 
     // Use this for initialization
@@ -59,7 +66,7 @@ public class PlayerController : MonoBehaviour {
             GameObject.Find("pai").GetComponent<PersonalSoundManager>(), sfxDict);
 
         playerDetails.animator = this.GetComponentInChildren<Animator>();
-        aiDetails.animator = GameObject.Find("pai").GetComponent<Animator>();
+        aiDetails.animator = GameObject.Find("pai").GetComponentInChildren<Animator>();
 
         GameManager.playerDetails = playerDetails;
         GameManager.aiDetails = aiDetails;

@@ -231,7 +231,15 @@ public class CharacterDetails {
 
     public void Respawn()
     {
-        rigidbody.transform.position = lastRespawn.position;
+        NavMeshHit closestHit;
+        if (NavMesh.SamplePosition(lastRespawn.position, out closestHit, 500, 1))
+        {
+            rigidbody.transform.position = closestHit.position;
+        }
+        foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
+        {
+            monster.GetComponent<MonsterRespawn>().Respawn();
+        }
         hitpoints.Respawn();
         battery.Respawn();
     }
@@ -304,6 +312,21 @@ public class CharacterDetails {
     public void PlaySFX(string sfx)
     {
         personalSoundManager.PlayEfxRandom(dictOfClips[sfx]);
+    }
+
+    public void PlayOther(string sfx)
+    {
+        personalSoundManager.PlayOtherRandom(dictOfClips[sfx]);
+    }
+
+    public void StopSFX()
+    {
+        personalSoundManager.StopSFX();
+    }
+
+    public void StopOther()
+    {
+        personalSoundManager.StopOther();
     }
 
     public void UpdateDetails()

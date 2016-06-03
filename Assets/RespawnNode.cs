@@ -7,7 +7,7 @@ public class RespawnNode : MonoBehaviour {
     {
         if (col.name == "player")
         {
-            col.gameObject.GetComponent<PlayerController>().SetRespawn(this.transform);
+            col.gameObject.GetComponent<PlayerController>().SetRespawn(this.transform);            
         }
     }
 }

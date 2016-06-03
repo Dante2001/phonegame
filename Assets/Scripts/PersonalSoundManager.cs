@@ -28,4 +28,14 @@ public class PersonalSoundManager : MonoBehaviour {
         otherSource.Play();
     }
 
+    public void StopSFX()
+    {
+        efxSource.Stop();
+    }
+
+    public void StopOther()
+    {
+        efxSource.Stop();
+    }
+
 }

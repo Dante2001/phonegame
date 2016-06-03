@@ -28,6 +28,7 @@ public class ShootState : CharacterState {
         if (!isShooting)
         {
             details.animator.SetTrigger("toFireball");
+            details.PlaySFX("fireball");
             isShooting = true;            
             shootingTimeLeft += details.shootTime;
         }
