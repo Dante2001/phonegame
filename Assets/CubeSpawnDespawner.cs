@@ -23,7 +23,7 @@ public class CubeSpawnDespawner : MonoBehaviour {
                 }
                 else if (!hit.collider.name.StartsWith("SpawnedCube"))
                 {
-                    GameObject spawnedCube = (GameObject)Instantiate(cubeToSpawn, new Vector3(hit.point.x, this.transform.position.y, hit.point.z), Quaternion.identity);
+                    GameObject spawnedCube = (GameObject)Instantiate(cubeToSpawn, new Vector3(hit.point.x, this.transform.position.y, hit.point.z), Quaternion.Euler(90,0,0));
                     spawnedCubes.Add(spawnedCube);
                     return true;
                 }
