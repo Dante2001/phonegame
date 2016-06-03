@@ -14,6 +14,8 @@ public class ShootState : CharacterState {
             shootingTimeLeft -= Time.deltaTime;
         if (shootingTimeLeft <= 0f)
         {
+            details.UseBattery(details.fireballCost);
+            details.FireBullet();
             return new DefaultState(details);
         }
         return currentState;
@@ -26,9 +28,7 @@ public class ShootState : CharacterState {
         if (!isShooting)
         {
             details.animator.SetTrigger("toFireball");
-            details.FireBullet();
-            isShooting = true;
-            details.UseBattery(details.fireballCost);
+            isShooting = true;            
             shootingTimeLeft += details.shootTime;
         }
         //else if (details.CheckBattery(details.fireballCost))
@@ -44,7 +44,7 @@ public class ShootState : CharacterState {
     public override void Move(int x, int z)
     {
         base.Move(x, z);
-        details.SetShootVelocity(x, z);
+        //details.SetShootVelocity(x, z);
     }
 
 }

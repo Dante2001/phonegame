@@ -31,7 +31,7 @@ public class StungunState : CharacterState
         {
             details.animator.SetTrigger("toStungun");
             isFiring = true;
-            attackTime = details.attackTime;
+            attackTime = details.stungunTime;
             details.ActivateStungunHitbox();
             details.UseBattery(details.stungunCost);
         }
@@ -40,7 +40,7 @@ public class StungunState : CharacterState
 
     public override void Move(int x, int z)
     {
-        details.SetStungunVelocity(x, z);
+        //details.SetStungunVelocity(x, z);
     }
 
     public override void FlyBack(GameObject attacker)

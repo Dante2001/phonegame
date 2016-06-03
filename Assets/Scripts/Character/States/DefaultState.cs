@@ -21,6 +21,7 @@ public class DefaultState : CharacterState {
         }
         details.SetVelocityX(x);
         details.SetVelocityZ(z);
+        
         //if (x == 1)
           //  details.SetVelocityX(1);
         //else if (x == -1)

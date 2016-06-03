@@ -20,7 +20,8 @@ public class CharacterDetails {
     public float defaultSpeed = 4f;
 
     public float rollTime = 0.4f;
-    public float rollSpeed = 15f;
+    public float rollSpeed = 8f;
+    public float rollMultiplier = 1f;
 
     public float attackTime = .5f;
     public float attackMoveSpeed = 2f;
@@ -32,6 +33,7 @@ public class CharacterDetails {
     public float fireballSpeed = 5f;
 
     public float stungunMoveSpeed = 4f;
+    public float stungunTime = 0.4f;
 
     public string enemyTag = "Monster";
 
@@ -120,10 +122,10 @@ public class CharacterDetails {
         previousZ = z;
     }
 
-    public void SetRollVelocity(int x, int z)
+    public void SetRollVelocity(int x, int z, float multiplier)
     {
-        velocity.x = x * rollSpeed;
-        velocity.z = z * rollSpeed;
+        velocity.x = x * rollSpeed * multiplier;
+        velocity.z = z * rollSpeed * multiplier;
         previousX = x;
         previousZ = z;
     }

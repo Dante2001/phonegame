@@ -6,6 +6,7 @@ public class RollState : CharacterState {
     protected bool isRolling = false;
     protected Vector2 rollDirection;
     protected float rollTime;
+    protected float multiplier = 1f;
 
     public RollState(CharacterDetails dets) : base(dets) { }
 
@@ -14,7 +15,8 @@ public class RollState : CharacterState {
         if (rollTime > 0)
         {
             rollTime -= Time.deltaTime;
-            details.SetRollVelocity((int)rollDirection.x, (int)rollDirection.y);
+            details.SetRollVelocity((int)rollDirection.x, (int)rollDirection.y, multiplier);
+            multiplier *= details.rollMultiplier;
             return currentState;
         }
         else
@@ -25,6 +27,16 @@ public class RollState : CharacterState {
     {
         if (!isRolling)
         {
+            float rollDir;
+            if (z > 0)
+                rollDir = 0f;
+            else if (z < 0)
+                rollDir = 0.5f;
+            else if (x > 0)
+                rollDir = 1f;
+            else
+                rollDir = 1.5f;
+            details.animator.SetFloat("DirectionRoll", rollDir);
             details.animator.SetTrigger("toRoll");
             isRolling = true;
             rollDirection = new Vector2(x, z);

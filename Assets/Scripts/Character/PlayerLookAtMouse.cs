@@ -11,7 +11,10 @@ public class PlayerLookAtMouse : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        animator = GameObject.Find("player").GetComponentInChildren<Animator>();
+        //if (!isAI)
+            animator = GameObject.Find("player").GetComponentInChildren<Animator>();
+        //else
+           // animator = GameObject.Find("pai").GetComponentInChildren<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +58,8 @@ public class PlayerLookAtMouse : MonoBehaviour {
                 GameManager.playerFacing = facing;
             else
                 GameManager.aiFacing = facing;
+
+
         }
 
         
