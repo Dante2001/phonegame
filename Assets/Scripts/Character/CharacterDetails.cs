@@ -67,7 +67,7 @@ public class CharacterDetails {
     public FirewallManager lastFirewall;
     public float cubeSpawnCost = 30f;
     public float cubeDespawnCost = 20f;
-    public float paisMovementCost = 3;
+    public float paisMovementCost = 24f;
     public float paisBatteryRechargeCost = 40f;
 
     public float maxCubeSpawnDistance = 2f;

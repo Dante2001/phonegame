@@ -9,13 +9,16 @@ public class Monster : MonoBehaviour {
     public int hitpoints = 3;
     public float speed = 3.5f;
     public float acceleration = 100f;
+    public MonsterSpinLogic spinLogic;
     public AIFollow aifollow;
     public NavMeshAgent navAgent;
+    public PersonalSoundManager sound;
     public List<AudioClip> attackSfx;
     public List<AudioClip> hitSfx;
 
 	public void GetHit() {
         Debug.Log("gothit");
+        sound.PlayEfxRandom(hitSfx);
 		//lose hp, then be destroyed
         hitpoints -= 1;
         if (hitpoints <= 0)
@@ -29,7 +32,8 @@ public class Monster : MonoBehaviour {
 		Invoke ("RecoverFromStun", 3f);
         aifollow.follow = false;
 		GetComponent<Animator> ().SetBool ("Attacking", false);
-
+        GetComponent<Animator>().SetBool("SpinAttack", false);
+        sound.PlayEfxRandom(hitSfx);
 	}
 
 	void RecoverFromStun() {
@@ -47,6 +51,17 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
+    public void spinFinished()
+    {
+        if (!stunned)
+            aifollow.follow = true;
+        GetComponent<Animator>().SetBool("SpinAttack", false);
+        if (spinLogic.IsNear() && !stunned)
+        {
+            GameObject.Find("player").GetComponent<PlayerController>().HitByMonster(this.gameObject);
+        }
+    }
+
 	void OnTriggerExit(Collider col) {
 		Debug.Log ("EXIT");
 		nearPlayer = false;
@@ -57,22 +72,33 @@ public class Monster : MonoBehaviour {
 		if (!stunned) {
 			if (col.gameObject.tag.Equals ("Player")) {
 				GetComponent<Animator> ().SetBool ("Attacking", true);
+                sound.PlayEfxRandom(attackSfx);
                 aifollow.follow = false;
 			}
 		}
 	}
+
+    public bool AttemptSpinAttack()
+    {
+        if (!stunned && !GetComponent<Animator>().GetBool("Attacking"))
+        {
+            GetComponent<Animator>().SetBool("SpinAttack", true);
+            return true;           
+        }
+        return false;
+    }
 
     void SetHitBox()
     {
         float rotation = aifollow.GetRotation();
         if ((rotation >= 315f && rotation <= 0f) || rotation < 45f)
         {
-            this.GetComponent<CapsuleCollider>().center = new Vector3(0f, 1f, 1f);
+            this.GetComponent<CapsuleCollider>().center = new Vector3(1f, 0f, 1f);
         }
         else if (rotation >= 45f && rotation < 135f)
             this.GetComponent<CapsuleCollider>().center = new Vector3(1f, 0f, 1f);
         else if (rotation >= 135f && rotation < 225f)
-            this.GetComponent<CapsuleCollider>().center = new Vector3(0f, -1f, 1f);
+            this.GetComponent<CapsuleCollider>().center = new Vector3(-1f, 0f, 1f);
         else // rotation >= 225f && rotation < 315f
             this.GetComponent<CapsuleCollider>().center = new Vector3(-1f, 0f, 1f);  
     }
@@ -81,6 +107,7 @@ public class Monster : MonoBehaviour {
 		if (!stunned) {
 			if (col.gameObject.tag.Equals ("Player")) {
 				GetComponent<Animator> ().SetBool ("Attacking", true);
+                sound.PlayEfxRandom(attackSfx);
                 aifollow.follow = false;
 			}
 		}
@@ -94,12 +121,14 @@ public class Monster : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        sound = this.GetComponent<PersonalSoundManager>();
         navAgent.speed = speed;
         navAgent.acceleration = acceleration;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        GetComponent<Animator>().SetBool("IsFollow", aifollow.follow);
         SetHitBox();
 	}
 }
