@@ -25,7 +25,7 @@ public class CubeTrigger : MonoBehaviour {
     public void DespawnCube()
     {
         hasCube = false;
-        Destroy(spawnedCube);
+        spawnedCube.GetComponent<CubeDetails>().despawnMe();
     }
 
     public void RestartFirewall()

@@ -67,11 +67,11 @@ public class CharacterDetails {
     public FirewallManager lastFirewall;
     public float cubeSpawnCost = 30f;
     public float cubeDespawnCost = 20f;
-    public float paisMovementCost = 24f;
+    public float paisMovementCost = 14f;
     public float paisBatteryRechargeCost = 40f;
 
-    public float maxCubeSpawnDistance = 2f;
-    public float maxCubeDespawnDistance = 2f;
+    public float maxCubeSpawnDistance = 5f;
+    public float maxCubeDespawnDistance = 5f;
 
     public Vector3 paisLastPos;
 
@@ -297,6 +297,11 @@ public class CharacterDetails {
     {
         float drainAmt = (rigidbody.transform.position - paisLastPos).magnitude * paisMovementCost * Time.deltaTime;
         UseBattery(drainAmt);
+    }
+
+    public void ResetBattery()
+    {
+        battery.Respawn();
     }
 
     public void SetPAIsLastPos()

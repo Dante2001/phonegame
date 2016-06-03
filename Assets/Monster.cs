@@ -80,8 +80,9 @@ public class Monster : MonoBehaviour {
 
     public bool AttemptSpinAttack()
     {
-        if (!stunned && !GetComponent<Animator>().GetBool("Attacking"))
+        if (!stunned)
         {
+            CancelInvoke();
             GetComponent<Animator>().SetBool("SpinAttack", true);
             return true;           
         }
@@ -128,7 +129,7 @@ public class Monster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GetComponent<Animator>().SetBool("IsFollow", aifollow.follow);
+        GetComponent<Animator>().SetBool("IsFollowing", aifollow.follow);
         SetHitBox();
 	}
 }

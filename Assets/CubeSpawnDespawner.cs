@@ -47,7 +47,7 @@ public class CubeSpawnDespawner : MonoBehaviour {
                     if (parentOfCube != null)
                        parentOfCube.GetComponent<CubeTrigger>().DespawnCube();
                     else
-                        Destroy(hit.collider.gameObject);
+                        hit.collider.GetComponent<CubeDetails>().despawnMe();
                     return true;
                 }
             }

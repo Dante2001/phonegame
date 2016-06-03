@@ -15,6 +15,7 @@ public class FirewallManager : MonoBehaviour {
 
     public void StartFirewall()
     {
+        //GameObject.Find("SoundManager").GetComponent<SoundManager>().playMainTheme();
         pai.GetComponentInChildren<SpriteRenderer>().enabled = true;
         NavMeshHit closestHit;
         if (NavMesh.SamplePosition(new Vector3(paiStart.position.x, pai.transform.position.y, paiStart.position.z), out closestHit, 500, 1))
@@ -65,6 +66,7 @@ public class FirewallManager : MonoBehaviour {
 
     public void FirewallCompleted()
     {
+        //GameObject.Find("SoundManager").GetComponent<SoundManager>().playCombatTheme();
         Destroy(entrance);
         Destroy(exit);
         pai.GetComponentInChildren<SpriteRenderer>().enabled = false;

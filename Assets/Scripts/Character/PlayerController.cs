@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
+
+        //GameObject.Find("SoundManager").GetComponent<SoundManager>().playMainTheme();
+
         playerDetails = new CharacterDetails(this.GetComponent<NavMeshAgent>(), this.GetComponentInChildren<AttackHitboxLogic>(),
             this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>(), 
             this.GetComponent<Hitpoints>(), this.GetComponent<BatteryCharge>(), null, 
@@ -113,12 +116,14 @@ public class PlayerController : MonoBehaviour {
                 }
                 if (atPuzzleTerminal && Input.GetButtonDown("Interact"))
                 {
+                    atPuzzleTerminal = false;
                     currentState.Puzzle(currentFirewall);
                 }
             }
         }
         else if (GameManager.isAI)
         {
+            Debug.Log("am AI");
             if (Input.GetButtonDown("SpawnCube"))
                 currentState.SpawnCube();
             if (Input.GetButtonDown("DespawnCube"))
