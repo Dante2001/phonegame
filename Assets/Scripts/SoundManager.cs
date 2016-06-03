@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour {
     private AudioSource wendyPlayer;
     private AudioSource paiPlayer;
 	public AudioClip mainTheme;
+	public AudioClip combatTheme;
+	public AudioClip menuTheme;
 	public static SoundManager instance;
 	bool soundIsOn = true;
 	List<AudioClip> lAudioSource = new List<AudioClip>();
@@ -21,6 +23,20 @@ public class SoundManager : MonoBehaviour {
 	public void playMainTheme() {
 		if (musicPlayer.clip != mainTheme) {
 			musicPlayer.clip = mainTheme;
+			musicPlayer.Play ();
+		}
+	}
+
+	public void playCombatTheme() {
+		if (musicPlayer.clip != combatTheme) {
+			musicPlayer.clip = combatTheme;
+			musicPlayer.Play ();
+		}
+	}
+
+	public void playMenuTheme() {
+		if (musicPlayer.clip != menuTheme) {
+			musicPlayer.clip = menuTheme;
 			musicPlayer.Play ();
 		}
 	}
@@ -58,7 +74,7 @@ public class SoundManager : MonoBehaviour {
 			musicEffectPlayer.volume = 1f;
 			musicPlayer.loop = true;
 
-			playMainTheme();
+			playMenuTheme();
 			//If instance already exists:
 		} else if (instance != this) {
 			//Destroy this, this enforces our singleton pattern so there can only be one instance of SoundManager.
