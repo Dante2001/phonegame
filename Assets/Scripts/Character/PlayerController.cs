@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,6 +12,10 @@ public class PlayerController : MonoBehaviour {
     private GameObject instancePhone;
     private bool atPuzzleTerminal = false;
     private FirewallManager currentFirewall;
+
+	public Image character;
+	public Sprite human;
+	public Sprite ai;
 
     public List<AudioClip> deathSFX;
     public List<AudioClip> attackSFX;
@@ -91,6 +96,9 @@ public class PlayerController : MonoBehaviour {
         currentState.Move(x, z);
         if (!GameManager.isAI)
         {
+			if (character.sprite == ai) {
+				character.sprite = human;
+			}
             if (Input.GetButton("Roll"))
             {
                 currentState.Roll(x, z);
@@ -123,6 +131,9 @@ public class PlayerController : MonoBehaviour {
         }
         else if (GameManager.isAI)
         {
+			if (character.sprite == human) {
+				character.sprite = ai;
+			}
             Debug.Log("am AI");
             if (Input.GetButtonDown("SpawnCube"))
                 currentState.SpawnCube();
