@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
 	void Start () {
 
-        //GameObject.Find("SoundManager").GetComponent<SoundManager>().playMainTheme();
+        GameObject.Find("SoundManager").GetComponent<SoundManager>().playMainTheme();
 
         playerDetails = new CharacterDetails(this.GetComponent<NavMeshAgent>(), this.GetComponentInChildren<AttackHitboxLogic>(),
             this.GetComponentInChildren<RangedAttackLogic>(), this.GetComponentInChildren<StungunLogic>(), 
