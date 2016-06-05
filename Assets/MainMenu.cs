@@ -21,6 +21,11 @@ public class MainMenu : MonoBehaviour {
 	
 	}
 
+    public void LoadGame()
+    {
+        Application.LoadLevel(1);
+    }
+
 	public void showHideTutorial() {
 
 		tutorial.SetActive (!tutorial.activeSelf);

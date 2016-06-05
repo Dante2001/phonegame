@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour {
 
 	public void playMainTheme() {
 		if (musicPlayer.clip != mainTheme) {
+            musicPlayer.volume = 0.4f;
 			musicPlayer.clip = mainTheme;
 			musicPlayer.Play ();
 		}
@@ -29,6 +30,7 @@ public class SoundManager : MonoBehaviour {
 
 	public void playCombatTheme() {
 		if (musicPlayer.clip != combatTheme) {
+            musicPlayer.volume = 0.5f;
 			musicPlayer.clip = combatTheme;
 			musicPlayer.Play ();
 		}
@@ -36,6 +38,7 @@ public class SoundManager : MonoBehaviour {
 
 	public void playMenuTheme() {
 		if (musicPlayer.clip != menuTheme) {
+            musicPlayer.volume = 0.5f;
 			musicPlayer.clip = menuTheme;
 			musicPlayer.Play ();
 		}

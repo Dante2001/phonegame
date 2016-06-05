@@ -22,15 +22,15 @@ public class DefaultState : CharacterState {
         details.SetVelocityX(x);
         details.SetVelocityZ(z);
         
-        //if (x == 1)
-          //  details.SetVelocityX(1);
-        //else if (x == -1)
-          //  details.SetVelocityX(-1);
+        if (x == 1)
+            details.animator.SetFloat("DirectionRun", 1f);
+        else if (x == -1)
+            details.animator.SetFloat("DirectionRun", 1.5f);
 
-//        if (z == 1)
-  //          details.SetVelocityZ(1);
-    //    else if (z == -1)
-      //      details.SetVelocityZ(-1);
+        if (z == 1)
+            details.animator.SetFloat("DirectionRun", 0f);
+        else if (z == -1)
+            details.animator.SetFloat("DirectionRun", 0.5f);
     }
 
     public override void Roll(int x, int z)

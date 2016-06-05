@@ -66,6 +66,7 @@ public class FirewallManager : MonoBehaviour {
 
     public void FirewallCompleted()
     {
+        this.GetComponent<SpriteRenderer>().color = new Color32(161, 161, 161, 255);
         GameObject.Find("SoundManager").GetComponent<SoundManager>().playCombatTheme();
         Destroy(entrance);
         Destroy(exit);

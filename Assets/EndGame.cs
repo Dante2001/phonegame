@@ -44,7 +44,7 @@ public class EndGame : MonoBehaviour {
         endScreen.SetActive(true);
         foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
         {
-            Destroy(monster.transform.root);
+            Destroy(monster.transform.root.gameObject);
         }
         Destroy(GameObject.Find("player"));
         Destroy(GameObject.Find("pai"));

@@ -56,8 +56,8 @@ public class CharacterDetails {
     public float healTime = 0.2f;
 
     public int maxHP = 4;
-    public float batteryRecharge = 1f;
-    public float batterySlowRecharge = 7f;
+    public float batteryRecharge = 7f;
+    public float batterySlowRecharge = 5f;
     public float batteryBP = 40f;
 
     public float healCost = 100f;
@@ -67,7 +67,7 @@ public class CharacterDetails {
     public FirewallManager lastFirewall;
     public float cubeSpawnCost = 30f;
     public float cubeDespawnCost = 20f;
-    public float paisMovementCost = 14f;
+    public float paisMovementCost = 700f;
     public float paisBatteryRechargeCost = 40f;
 
     public float maxCubeSpawnDistance = 5f;
@@ -295,7 +295,9 @@ public class CharacterDetails {
 
     public void DrainBatteryFromMovement()
     {
-        float drainAmt = (rigidbody.transform.position - paisLastPos).magnitude * paisMovementCost * Time.deltaTime;
+        Vector3 currentPos = rigidbody.transform.position;
+        currentPos.y = 0;
+        float drainAmt = (currentPos - paisLastPos).magnitude * paisMovementCost * Time.deltaTime;
         UseBattery(drainAmt);
     }
 
@@ -336,6 +338,8 @@ public class CharacterDetails {
 
     public void UpdateDetails()
     {
+        paisLastPos = this.rigidbody.transform.position;
+        paisLastPos.y = 0;
         rigidbody.velocity = velocity;
         velocity = Vector3.zero;
     }
